@@ -776,6 +776,8 @@ def get_theme_user_tag(theme_name, submit_user):
     mark_dict = {}
     print len(tag_result)
     for i in tag_result:
+        if not i['found']:
+            continue
         i_keywords = json.loads(i['fields']['keywords'][0])
         try:
             i_mark = i['fields']['function_mark'][0]
@@ -926,7 +928,7 @@ def get_theme_related(theme_name, submit_user):
         if i['_id'] in origin_event:
             continue
         if i['found'] == True:
-            print i,'-----------'
+            # print i,'-----------'
             try:
                 final_event.append([i['fields']['en_name'][0], i['fields']['name'][0]])
             except:

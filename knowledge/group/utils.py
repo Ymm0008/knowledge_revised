@@ -457,16 +457,26 @@ def compare_group_event(g_name1, g_name2, submit_user, flag):
     event_list = []
     for user_result in uid_list_all:
         event_list1 = []
-        print user_result
-        for user in user_result:
-            user_value = user
-            c_string = 'START s0 = node:node_index(uid="'+str(user_value)+'") '
-            c_string += 'MATCH (s0)-[r]-(s1:Event) return s1 LIMIT 50'
-            print c_string
+
+        user_list, org_list = search_user_type(user_result)
+        for uid in user_list:
+            c_string = 'start n=node:'+node_index_name+'("'+people_primary+':'+str(uid)+'") match (n)-[r]-(e:Event) return e'
             result = graph.run(c_string)
-            for i in list(result):
-                end_id = dict(i['s1'])
-                event_list1.append(end_id['event_id'])
+            for event in result:
+                # print event,'---------'
+                # if event:
+                event_dict = dict(event)
+                event_id = event_dict['e']['event_id']
+                event_list1.append(event_id)
+        for uid in org_list:
+            c_string = 'start n=node:'+org_index_name+'("'+org_primary+':'+str(uid)+'") match (n)-[r]-(e:Event) return e'
+            result = graph.run(c_string)
+            for event in result:
+                # print event,'---------'
+                # if event:
+                event_dict = dict(event)
+                event_id = event_dict['e']['event_id']
+                event_list1.append(event_id)
         event_list.append(event_list1)
     if flag == 'all':
         event_list1 = [i for i in set(event_list[0])]
