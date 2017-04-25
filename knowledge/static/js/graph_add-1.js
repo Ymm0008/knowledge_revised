@@ -1044,9 +1044,10 @@ function sure_task() {
     var status,user_rel=[];
     if($('#box1').is(':checked')) { status=1; };
     if($('#box2').is(':checked')) { status=2; };
-    $("#relation .rel_list input:checkbox:checked").each(function (index,item) {
+    $("#relation_node .rel_list input:checkbox:checked").each(function (index,item) {
         user_rel.push($(this).val());
     });
+    console.log(user_rel)
     var user_rel_list=user_rel.join(',');
     var n_t=0;
     if(node_type=='user'){
@@ -1242,17 +1243,17 @@ function task_list(data) {
 
                 },
             },
-            {
-                title: "立即更新",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return '<a style="cursor: pointer;">立即更新</a>';
-                },
-            },
+            // {
+            //     title: "立即更新",//标题
+            //     field: "",//键名
+            //     sortable: true,//是否可排序
+            //     order: "desc",//默认排序方式
+            //     align: "center",//水平
+            //     valign: "middle",//垂直
+            //     formatter: function (value, row, index) {
+            //         return '<a style="cursor: pointer;">立即更新</a>';
+            //     },
+            // },
 
         ],
         // onClickRow: function (row, tr) {

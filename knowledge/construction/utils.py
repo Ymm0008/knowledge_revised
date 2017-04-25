@@ -156,7 +156,8 @@ def submit_identify_in_uid(input_data):
    
     #step2: filter in compute
     new_uid_set = set(new_uid_list)
-    compute_set = set(r.hkeys('compute'))
+    # compute_set = set(r.hkeys('compute'))
+    compute_set = set([])
     in_uid_set = list(new_uid_set - compute_set)
     print 'new_uid_set:', new_uid_set 
     print 'in_uid_set:', in_uid_set
