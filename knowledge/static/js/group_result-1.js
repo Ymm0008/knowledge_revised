@@ -346,6 +346,7 @@ function key_tag(data) {
 
 if (key_series.length==0){
     $('#tag_left').html('暂无数据');
+    $('#tag_left').css({'lineHeight':'330px'});
 }else {
     require(
         [
@@ -386,9 +387,9 @@ if (key_series.length==0){
         }
     );
 }
-console.log(tag_series)
 if (tag_series.length==0){
     $('#tag_right').html('暂无数据');
+    $('#tag_right').css({'lineHeight':'330px'});
 }else {
     require(
         [
@@ -568,6 +569,7 @@ function user_tag(data) {
 
 if (user_key_series.length==0){
     $('#label_left').html('暂无数据');
+    $('#label_left').css({'lineHeight':'330px'});
 }else {
     require(
         [
@@ -611,6 +613,7 @@ if (user_key_series.length==0){
 
 if (user_tag_series.length==0){
     $('#label_right').html('暂无数据');
+    $('#label_right').css({'lineHeight':'330px'});
 }else {
     //----人物业务标签
     require(

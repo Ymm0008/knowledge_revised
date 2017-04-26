@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/static/css/graph_add.css">
 <style>
     .table>thead:first-child>tr:first-child>th {
-        width: 14%;
+        width: 20%;
     }
      .item{
         padding:3px 5px;
@@ -319,10 +319,14 @@
                                    style='text-align:center;border:1px solid #ccc;'/>组
                     </span>
                     <div id="div-button" style="display:inline-block;margin-left:5px;">
-                        <input type="button" value="首页" id="F-page">
-                        <input type="button" value="上一页" id="Pre-page">
-                        <input type="button" value="下一页" id="Nex-page">
-                        <input type="button" value="尾页" id="L-page">
+                        <input type="button" value="首页" id="F-page"
+                               style="padding: 2px 5px;border-radius: 5px;">
+                        <input type="button" value="上一页" id="Pre-page"
+                               style="padding: 2px 5px;border-radius: 5px;">
+                        <input type="button" value="下一页" id="Nex-page"
+                               style="padding: 2px 5px;border-radius: 5px;">
+                        <input type="button" value="尾页" id="L-page"
+                               style="padding: 2px 5px;border-radius: 5px;">
                     </div>
                     <span style="display:inline-block;">&nbsp;当前第<span id="s2"></span>页</span>
                     <span style="display:inline-block;">总共<span id="s1"></span>页</span>
@@ -489,12 +493,35 @@
         </div>
     </div>
 </div>
+
+<!--人物更新关系-->
+<div class="modal fade" id="update_rel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">关系选择</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span style="font-size: 12px;color: #676767">计算关系</span>
+                    <div class="rel_list" style="display: inline-block;margin: 0 10px;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="update_rel()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 
 {% block my_js %}
 
 <script>
+    var submit_user=$('#name').text();
     $('#datetimepicker6').datetimepicker();
     $('#datetimepicker7').datetimepicker();
 

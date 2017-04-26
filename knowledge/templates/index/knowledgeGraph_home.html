@@ -19,7 +19,7 @@
 <script src="/static/js/echarts-2/build/dist/echarts.js"></script>
 
 <script type="text/javascript">
-    var scaling=5;
+    var scaling=5,sym_style='none';
     var lation={
         "other":"其他",
         "friend" :"交互",
@@ -28,7 +28,6 @@
         "colleague" :"自述关联",
         "ip_relation" :"IP关联",
         "user_tag":"其他关系",
-        "friend" :"交互",
         "colleague" :"业务关联",
         "organization_tag":"其他",
         "contain"  :"主题关联",
@@ -64,6 +63,7 @@
     var relation;
     if ('{{flag}}'=='Wrong Type'){
         scaling=2;
+        sym_style='arrow';
         $('#graph_picture').height(1000);
         relation=JSON.parse(localStorage.getItem("graph_force"));
         setTimeout(function () {
@@ -196,18 +196,7 @@
     });
     var all_node;
     all_node=user_list.concat(org_list).concat(event_list).concat(topic_list).concat(group_list);
-    var leg=[];
-    for(var i=0;i<legend.length;i++){
-        if (leg.indexOf(legend[i])===-1){
-            leg.push(legend[i])
-        }
-    };
-    var cate=[];
-    for(var i=0;i<categories.length;i++){
-        if (cate.indexOf(categories[i])===-1){
-            cate.push(categories[i])
-        }
-    }
+
     // 路径配置
     require.config({
         paths: {
@@ -299,6 +288,7 @@
                             maxRadius : 25,
                             gravity: 2,
                             scaling:scaling,
+                            linkSymbol:sym_style,
                             symbolSize:20 ,
                             nodes:all_node,
                             links : link

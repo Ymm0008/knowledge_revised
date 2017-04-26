@@ -278,10 +278,33 @@ function show_rel() {
         );
     }
 }
+var lation={
+    "other":"其他",
+    "friend" :"交互",
+    "relative" :"亲属",
+    "leader" :"上下级关系",
+    "colleague" :"自述关联/业务关联",
+    "ip_relation" :"IP关联",
+    "user_tag":"其他关系",
+    "organization_tag":"其他",
+    "contain"  :"主题关联",
+    'event_other':"其他关系",
+    "join" :" 参与事件",
+    "discuss":"参与舆论",
+    "other_relationship" :"其他关系",
+    "wiki_link":"维基百科"
+};
 function rel_value() {
+    relation=[];
     $("[name=rels]:checkbox:checked").each(function (index,item) {
         relation.push($(this).val());
     });
+    var r=[];
+    $.each(relation,function (index,item) {
+        r.push(lation[item]);
+    })
+    $('.rel-3-value').val();
+    $('.rel-3-value').val(r.join(','));
 }
 //----------关系添加-----完-----
 
@@ -329,18 +352,20 @@ function end_node() {
     var step=$('.advan-4 .other .jump').val();
     var limit=$('.advan-4 .other .datanums').val();
 		
-		input_data={
-                'start_nodes':starts_nodes,
-                'end_nodes':end_nodes,
-                'relation':relation,
-                'step':step,
-                'limit':limit,
-                'submit_user':submit_user,
-                'short_path':short_path,
-            };
-            input_data=JSON.stringify(input_data);
-            localStorage.setItem('temp',input_data);
-            window.open('/relation/search_result/?simple_advanced='+simple_advanced);
+    input_data={
+            'start_nodes':starts_nodes,
+            'end_nodes':end_nodes,
+            'relation':relation,
+            'step':step,
+            'limit':limit,
+            'submit_user':submit_user,
+            'short_path':short_path,
+        };
+        console.log(input_data)
+        // input_data=JSON.stringify(input_data);
+        // localStorage.setItem('temp',input_data);
+        // window.open('/relation/search_result/?simple_advanced='+simple_advanced);
+
     //--------其他信息----完
     /*if (short_path=='True'){
         //此处要对起始节点进行判断，只能输入一个节点
