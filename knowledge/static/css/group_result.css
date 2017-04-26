@@ -167,7 +167,6 @@ body {
 #container #content_left .topic_analysis .topic_right #tag_right {
     width: 355px;
     height: 330px;
-    line-height: 330px;
     text-align: center;
 }
 /*人物分析*/
@@ -196,7 +195,6 @@ body {
 #container #content_left .character_analysis .character_right #label_right {
     width: 355px;
     height: 330px;
-    line-height: 330px;
     text-align: center;
 }
 
