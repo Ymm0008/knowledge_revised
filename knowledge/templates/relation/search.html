@@ -11,7 +11,7 @@
     #container #advanced_search .advan-4 .short {
         margin: 0 5px 0 20px;
     }
-    .formation span {
+    .formation span,.formation2 span {
         display: inline-block;
         padding: 2px;
         margin-right:5px;
@@ -39,7 +39,7 @@
             <p class="tit">起始节点</p>
             <div class="start" style="width:95%;">
                 <div class="formation" style="margin: 15px 0;"></div>
-                <!--<b class="icon icon-plus-sign start_plus"></b>-->
+                <b class="icon icon-plus-sign start_plus"></b>
                 <span>节点类型</span>
                 <select id="s-type" onchange="start(this.value)">
                     <option value="1">人物</option>
@@ -87,7 +87,8 @@
         <div class="advan-3">
             <p class="tit">终止节点</p>
             <div class="end" style="width:95%;">
-                <!--<b class="icon icon-plus-sign end_plus"></b>-->
+                <div class="formation2" style="margin: 15px 0;"></div>
+                <b class="icon icon-plus-sign end_plus"></b>
                 <span>节点类型</span>
                 <select id="s-3-type" onchange="end(this.value)">
                     <option value="1">人物</option>
@@ -113,7 +114,7 @@
                     <!--<button type="button" class="upload" >上传</button>-->
                 </div>
                 <div class="options-3-value" style="display: none;">
-                    <select onchange="e_yhf(this.value)">
+                    <select id="e_yhf" onchange="e_yhf(this.value)">
                         <option value="y">与</option>
                         <option value="h">或</option>
                         <option value="f">非</option>
@@ -161,6 +162,11 @@
     <button id="sure_advan" style="display: none;">高级搜索</button>
 </div>
 <!--关系模态框-->
+<style>
+    #rel_value_list p {
+        margin: 10px 0;
+    }
+</style>
 <div class="modal fade relation_lis" id="relation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
