@@ -42,11 +42,13 @@ body {
     /*box-shadow: 1px 1px 1px #a2a2a2;*/
 }
 #container .search ._find {
+    border-radius: 5px;
     padding: 0.5% 2%;
     width: 60%;
     background-color: #e3e3f2;
 }
 #container .search .sure {
+    border-radius: 5px;
     margin-left: 5%;
     padding:0.5% 2%;
     color: white;

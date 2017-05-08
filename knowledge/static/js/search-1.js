@@ -335,6 +335,7 @@ function rel_value() {
 var input_data;
 var short_path;
 var end_conditions={},conditions={};
+
 // function end_node() {
     /*if (short_path=='True'){
      //此处要对起始节点进行判断，只能输入一个节点
@@ -369,6 +370,7 @@ var end_conditions={},conditions={};
      window.open('/relation/search_result/?simple_advanced='+simple_advanced);
      }*/
 // }
+
 $('#sure_advan').on('click',function () {
     simple_advanced='a';
     short_path='False';
@@ -511,7 +513,8 @@ $('#sure_advan').on('click',function () {
     }else {
         if (end_no_ids==1){
             if ($('.end .options-1-value').val()==''){
-                alert('请输入终止节点的值。(不能为空)');
+                // alert('请输入终止节点的值。(不能为空)');
+                null;
             }else {
                 end_ids.push($('.end .options-1-value').val());
                 end_nodes.push(
@@ -523,7 +526,8 @@ $('#sure_advan').on('click',function () {
             }
         }else if (end_no_ids==2){
             if (end_ids_files == undefined){
-                alert('您的终止节点还没有上传文件。');
+                null;
+                // alert('您的终止节点还没有上传文件。');
             }else {
                 end_nodes.push(
                     {
@@ -534,7 +538,8 @@ $('#sure_advan').on('click',function () {
             }
         }else if (end_no_ids==3) {
             if ($('.end .options-3_down').val()==''){
-                alert('请输入终止节点中属性搜索中的值。(不能为空)')
+                null;
+                // alert('请输入终止节点中属性搜索中的值。(不能为空)')
             }else {
                 end_yhf_key=$('#e_tag').val();
                 end_yhf_value='*'+$('.end .options-3_down').val()+'*';
@@ -556,7 +561,7 @@ $('#sure_advan').on('click',function () {
         };
     };
 
-    if (starts_nodes.length!=0 && end_nodes.length!=0 ){
+    if (starts_nodes.length!=0){
         input_data={
             'start_nodes':starts_nodes,
             'end_nodes':end_nodes,
@@ -566,7 +571,7 @@ $('#sure_advan').on('click',function () {
             'submit_user':submit_user,
             'short_path':short_path,
         };
-        console.log(input_data)
+        // console.log(input_data)
         input_data=JSON.stringify(input_data);
         localStorage.setItem('temp',input_data);
         window.open('/relation/search_result/?simple_advanced='+simple_advanced);
@@ -579,7 +584,7 @@ $('#sure_advan').on('click',function () {
         // setTimeout(function () {
         //     window.location.reload();
         // },2000)
-    }else if (starts_nodes.length==0 || end_nodes.length==0 ){
+    }else if (starts_nodes.length==0){
         alert('您输入的内容条件不完整,请检查您输入的条件。');
     };
 
