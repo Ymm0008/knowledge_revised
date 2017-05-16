@@ -731,6 +731,7 @@ function type_1(value) {
         $('#node_list').css({display:'block'});
         $('#event_list').css({display:'none'});
         $('.count_task').css({display:'block'});
+        $('.count_task_2').css({display:'none'});
         $('.event_task').css({display:'none'});
     }else if (value==2) {
         $('.user').hide();
@@ -742,6 +743,7 @@ function type_1(value) {
         $('#node_list').css({display:'none'});
         $('#event_list').css({display:'block'});
         $('.count_task').css({display:'none'});
+        $('.count_task_2').css({display:'none'});
         $('.event_task').css({display:'block'});
     }else if (value==3){
         $('.user').hide();
@@ -753,8 +755,9 @@ function type_1(value) {
         type='influence';
         $('#node_list').css({display:'block'});
         $('#event_list').css({display:'none'});
-        $('.count_task').css({display:'block'});
+        $('.count_task').css({display:'none'});
         $('.event_task').css({display:'none'});
+        $('.count_task_2').css({display:'block'});
     }
 };
 
@@ -882,6 +885,8 @@ function type_3_age(value) {
     }
 }
 //===========机构组织=========完======
+
+
 
 
 //-----------推荐人物----------
@@ -1150,125 +1155,9 @@ function task_renew() {
 task_renew();
 function task_list(data) {
     var data = eval(data);
+    console.log(data)
     $('#count').bootstrapTable('load', data);
     $('#count').bootstrapTable({
-        data:data,
-        search: true,//是否搜索
-        pagination: true,//是否分页
-        pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
-        sidePagination: "client",//服务端分页
-        searchAlign: "left",
-        searchOnEnterKey: false,//回车搜索
-        showRefresh: false,//刷新按钮
-        showColumns: false,//列选择按钮
-        buttonsAlign: "right",//按钮对齐方式
-        locale: "zh-CN",//中文支持
-        detailView: false,
-        showToggle:false,
-        sortName:'bci',
-        sortOrder:"desc",
-        columns: [
-            {
-                title: "人物名称",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
-            },
-            {
-                title: "添加方式",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    if (row[6]=="influence"){
-                        return '影响力推荐';
-                    }else if(row[6]=="sensitive"){
-                        return '敏感度推荐';
-                    }else if(row[6]=="upload"){
-                        return '上传文件';
-                    }else if(row[6]=="write"){
-                        return '手动输入';
-                    }else if(row[6]=="auto"){
-                        return '关注用户推荐';
-                    }
-                }
-            },
-            {
-                title: "添加人",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[5];
-                },
-            },
-            {
-                title: "提交时间",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[1];
-                },
-            },
-            {
-                title: "任务状态",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    if (row[2]==1){
-                        return '立即计算';
-                    }else if (row[2]==2){
-                        return '预约计算';
-                    }else if (row[2]==3){
-                        return '正在计算';
-                    }else if (row[2]==4){
-                        return '<a style="cursor: pointer;">计算完成</a>';
-                    }
-
-                },
-            },
-            // {
-            //     title: "立即更新",//标题
-            //     field: "",//键名
-            //     sortable: true,//是否可排序
-            //     order: "desc",//默认排序方式
-            //     align: "center",//水平
-            //     valign: "middle",//垂直
-            //     formatter: function (value, row, index) {
-            //         return '<a style="cursor: pointer;">立即更新</a>';
-            //     },
-            // },
-
-        ],
-        // onClickRow: function (row, tr) {
-        //     if ($(tr.context).index()==2) {
-        //         del_eventuid=row[0];
-        //         $('#del_ject').modal("show");
-        //     }
-        // }
-    });
-};
-
-function task_list_2(data) {
-    var data = eval(data);
-    $('#count_2').bootstrapTable('load', data);
-    $('#count_2').bootstrapTable({
         data:data,
         search: true,//是否搜索
         pagination: true,//是否分页
@@ -1368,7 +1257,7 @@ function task_list_2(data) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return '<a style="cursor: pointer;">立即更新</a>';
+                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row[1]+'\')">立即更新</a>';
                 },
             },
 
@@ -1382,5 +1271,227 @@ function task_list_2(data) {
     });
 };
 
+function task_list_2(data) {
+    var data = eval(data);
+    $('#count_2').bootstrapTable('load', data);
+    $('#count_2').bootstrapTable({
+        data:data,
+        search: true,//是否搜索
+        pagination: true,//是否分页
+        pageSize: 5,//单页记录数
+        pageList: [5, 20, 40, 80],//分页步进值
+        sidePagination: "client",//服务端分页
+        searchAlign: "left",
+        searchOnEnterKey: false,//回车搜索
+        showRefresh: false,//刷新按钮
+        showColumns: false,//列选择按钮
+        buttonsAlign: "right",//按钮对齐方式
+        locale: "zh-CN",//中文支持
+        detailView: false,
+        showToggle:false,
+        sortName:'bci',
+        sortOrder:"desc",
+        columns: [
+            {
+                title: "机构名称",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    return row[0];
+                }
+            },
+            {
+                title: "添加方式",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    if (row[6]=="influence"){
+                        return '影响力推荐';
+                    }else if(row[6]=="sensitive"){
+                        return '敏感度推荐';
+                    }else if(row[6]=="upload"){
+                        return '上传文件';
+                    }else if(row[6]=="write"){
+                        return '手动输入';
+                    }else if(row[6]=="auto"){
+                        return '关注用户推荐';
+                    }
+                }
+            },
+            {
+                title: "添加人",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    return row[5];
+                },
+            },
+            {
+                title: "提交时间",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    return row[1];
+                },
+            },
+            {
+                title: "任务状态",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    if (row[2]==1){
+                        return '立即计算';
+                    }else if (row[2]==2){
+                        return '预约计算';
+                    }else if (row[2]==3){
+                        return '正在计算';
+                    }else if (row[2]==4){
+                        return '<a style="cursor: pointer;">计算完成</a>';
+                    }
+
+                },
+            },
+            {
+                title: "立即更新",//标题
+                field: "",//键名
+                sortable: true,//是否可排序
+                order: "desc",//默认排序方式
+                align: "center",//水平
+                valign: "middle",//垂直
+                formatter: function (value, row, index) {
+                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row[1]+'\')">立即更新</a>';
+                },
+            },
+
+        ],
+        // onClickRow: function (row, tr) {
+        //     if ($(tr.context).index()==2) {
+        //         del_eventuid=row[0];
+        //         $('#del_ject').modal("show");
+        //     }
+        // }
+    });
+};
+
+
+//---更新--
+var relation=[],uid_update,r_style;
+function _rel_new(update) {
+    uid_update=update;
+    if (node_type=='user'){
+        $('#update_rel .rel_list').empty();
+        $('#update_rel .rel_list').append(
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="friend" checked> 交互'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="colleague" checked> 自述关联'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="colleague" checked> 业务关联'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="discuss" checked> 参与讨论'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="join" checked> 参与事件'+
+            '</label>'
+        );
+    }else if (node_type=='event'){
+        $('#update_rel .rel_list').empty();
+        $('#update_rel .rel_list').append(
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="join" checked> 参与事件'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="discuss" checked> 参与讨论'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="contain" checked> 主题关联'+
+            '</label>'
+        )
+    }else {
+        $('#update_rel .rel_list').empty();
+        $('#update_rel .rel_list').append(
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="friend" checked> 交互'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="colleague" checked> 业务关联'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="join" checked> 参与事件'+
+            '</label>'+
+            '<label class="checkbox-inline">'+
+            '   <input type="checkbox" value="discuss" checked> 参与讨论'+
+            '</label>'
+        )
+    }
+    $('#update_rel').modal('show');
+};
+
+function update_rel() {
+    $("#update_rel .rel_list input:checkbox:checked").each(function (index,item) {
+        relation.push($(this).val());
+    });
+    if(node_type=='Event'){
+        var update_url='/construction/event_update/?event_id='+uid_update+
+            '&relation_compute='+relation.join(',');
+        $.ajax({
+            url: update_url,
+            type: 'GET',
+            dataType: 'json',
+            async: true,
+            success:function (data) {
+                if (data==1){
+                    alert('已提交更新，正在计算。');
+                }else {
+                    alert('更新失败。');
+                }
+            }
+        });
+    }else {
+        var type_num;
+        if(node_type=='User'){
+            type_num=0;
+        }else if(node_type=='Org'){
+            type_num=1;
+        }
+        var d = new Date();
+        var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        var update_url='/construction/update_user/?date='+date+'&node_type='+type_num+'&uid='+uid_update+
+            '&recommend_style=update&submit_user='+submit_user+'&user_rel='+relation.join(',');
+        $.ajax({
+            url: update_url,
+            type: 'GET',
+            dataType: 'json',
+            async: true,
+            success:function (data) {
+                if (data==1){
+                    alert('已提交更新，正在计算。');
+                }else {
+                    alert('更新失败。');
+                }
+            }
+        });
+    }
+
+};
+//----------------
 
 
