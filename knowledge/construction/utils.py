@@ -116,7 +116,7 @@ def submit_identify_in_uid(input_data):
     upload_data = input_data['upload_data']
     uid_list = []
     invalid_uid_list = []
-    if recommend_style == 'upload':
+    if recommend_style == 'submit':
         line_list = upload_data
         # print line_list,'====8888===='
         for line in line_list:
