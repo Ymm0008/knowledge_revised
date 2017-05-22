@@ -116,7 +116,7 @@ def submit_identify_in_uid(input_data):
     upload_data = input_data['upload_data']
     uid_list = []
     invalid_uid_list = []
-    if recommend_style == 'submit':
+    if recommend_style == 'upload':
         line_list = upload_data
         # print line_list,'====8888===='
         for line in line_list:
@@ -176,6 +176,7 @@ def submit_identify_in_uid(input_data):
         #     tmp = {'system':'0', 'operation':submit_user}
         if operation_type == 'submit':
             relation_list = relation_string.split(',')
+            print [in_date, compute_status, node_type, relation_list, submit_user, recommend_style]
             r.hset(compute_hash_name, in_item, json.dumps([in_date, compute_status, node_type, relation_list, submit_user, recommend_style]))
             # r.hset(hashname_submit, in_item, json.dumps(tmp))
             # r.hset(submit_user_recomment, in_item, '0')
