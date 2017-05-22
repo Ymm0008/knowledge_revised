@@ -132,6 +132,7 @@ def ajax_submit_identify_in():
     results = 0 # mark fail
     input_data = request.get_json()
     print type(input_data),'=======!!!'
+    print input_data,'============================='
     #input_data={'date': 2016-03-13, 'upload_data':[],'node_type':'1/2', 'user':submit_user,'status':0,'relation_string':'', 'recommend_style':'upload/write', 'type':'uid', 'operation_type': 'show'/'submit'} 
     # input_data={'date': '2016-03-13', 'upload_data':[1198503091],'node_type':'0', 'user':'admin@qq.com','compute_status':'1','relation_string':'friend,discuss,join', 'recommend_style':'write',  'operation_type': 'submit'} 
     #upload_data stucture same to detect/views/mult_person
@@ -152,9 +153,12 @@ def ajax_show_user_task_status():
         if detail[2] == node_type:
             kv_list = [k]
             kv_list.extend(detail)
+            if len(detail) == 5:
+                kv_list.extend(['upload'])
             result_list.append(kv_list)
         else:
             continue
+    # print result_list,'-----------'
     return json.dumps(result_list)
 
 # show ts weibo

@@ -1062,6 +1062,9 @@ function sure_task() {
     }
     if (recommendation_manual=='m'){
         var input_data,updata;
+        // console.log(recommend_style)
+        // recommend_style = 'upload'
+        // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         if (recommend_style=='upload'){
             updata=updata_file;
         }else {
@@ -1155,7 +1158,7 @@ function task_renew() {
 task_renew();
 function task_list(data) {
     var data = eval(data);
-    console.log(data)
+    // console.log(data)
     $('#count').bootstrapTable('load', data);
     $('#count').bootstrapTable({
         data:data,
@@ -1199,7 +1202,7 @@ function task_list(data) {
                     }else if(row[6]=="sensitive"){
                         return '敏感度推荐';
                     }else if(row[6]=="upload"){
-                        return '上传文件';
+                        return '文件导入';
                     }else if(row[6]=="write"){
                         return '手动输入';
                     }else if(row[6]=="auto"){
