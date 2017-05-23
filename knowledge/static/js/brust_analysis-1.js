@@ -2,6 +2,15 @@
 function getLocalTime(nS) {
     return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,10);
 };
+Array.prototype.contains = function (obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
 //===
 var ajax_method;
 function sudden() {
@@ -84,146 +93,158 @@ function current(data) {
     $('.forecast_content .people').text(Math.round(data.uid_prediction));
     $('.forecast_content .weibo_count').text(Math.round(data.weibo_prediction));
     //画图
-    var exist_time=[],exist_nums=[],
+    var data=data.trendline;
+    console.log(data)
+    var myChart = echarts.init(document.getElementById('forecast_img'));
+    var series_nums=[],series_time=[];
+    var climax = data.climax;
+
+    var exist_trend = data.exist_trend;
+    var rise_trend = data.rise_trend;
+    var fall_trend = data.fall_trend;
+    var max_time=[],max_nums=[],
+        exist_time=[],exist_nums=[],
         rise_time=[],rise_nums=[],
         fall_time=[],fall_nums=[];
-    for (var key in data.trendline){
-        if (key=='exist_trend'){
-            $.each(data.trendline[key],function (index,item) {
-                exist_time.push(getLocalTime(item[0]));
-                exist_nums.push(item[1]);
-            })
-        };
-        if (key=='rise_trend'){
-            $.each(data.trendline[key],function (index,item) {
-                rise_time.push(getLocalTime(item[0]));
-                rise_nums.push(item[1]);
-            })
-        };
-        if (key=='fall_trend'){
-            $.each(data.trendline[key],function (index,item) {
-                fall_time.push(getLocalTime(item[0]));
-                fall_nums.push(item[1]);
-            })
-        }
+
+    if (climax.length!=0){
+        max_time.push(climax[0]);
+        max_nums.push(climax[1]);
     };
-    var a=exist_nums[exist_nums.length-1];
-    fall_nums.unshift(a);
-    var myChart = echarts.init(document.getElementById('forecast_img'));
-    var time=[],series=[];
-    for (var k=0;k<exist_nums.length;k++){
-        rise_nums.unshift('');
+
+    if (exist_trend.length!=0){
+        for (var i=0; i< exist_trend.length; i++){
+            exist_time.push(exist_trend[i][0]);
+            exist_nums.push(exist_trend[i][1]);
+        };
     };
-    if (!rise_nums==[]){
-        for (var t=0;t<exist_nums.length-1;t++){
-            fall_nums.unshift('');
+
+    if (rise_trend.length!=0){
+        for (var i=0; i< rise_trend.length; i++){
+            rise_time.push(rise_trend[i][0]);
+            rise_nums.push(rise_trend[i][1].toFixed(2));
+        };
+    };
+
+    if (fall_trend.length!=0){
+        for (var i=0; i< fall_trend.length; i++){
+            fall_time.push(fall_trend[i][0]);
+            fall_nums.push(fall_trend[i][1].toFixed(2));
+        };
+    };
+
+    var rel_len=exist_time.length;
+    var rise_len=rise_time.length;
+    var fall_len=fall_time.length;
+    var rel_last;
+    if (rel_len!=0){
+        rel_last=exist_nums[rel_len-1];
+        var not_max='min',name='最小值';
+        if (exist_time.contains(max_time[0])){
+            not_max='max',name='最大值';
         }
-        $.each(exist_time,function (index,item) {
-            time.push(item);
-        })
-        $.each(fall_time,function (index,item) {
-            time.push(item);
-        })
-        series.push(
+        series_nums.push(
             {
-                name:'趋势预测',
+                name:'宏观趋势预测',
                 type:'line',
                 smooth:true,
                 itemStyle: {
+                    color:'#FF7F50',
                     normal: {
-                        color: '#1790cf',
-                    }
-                },
-                areaStyle: {
-                    normal: {
-                        shadowColor:'#1790cf',
+                        color: '#FF7F50',
                     }
                 },
                 data:exist_nums,
                 markPoint : {
+                    //symbol: 'none',//symbol: 'pin',
                     data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
+                        {type : not_max, name: name},
                     ]
                 },
-            },
-            {
-                name:'趋势走低',
-                type:'line',
-                lineStyle:{
-                    normal:{
-                        color: 'green',
-                        type:'dotted'
-                    }
-                },
-                data:fall_nums,
             }
         );
-    }else {
-        for (var t=0;t<(exist_nums.length+rise_nums.length-2);t++){
-            fall_nums.unshift('');
+    };
+    if (rise_len!=0){
+        if (rel_len!=0){
+            rise_nums.unshift(rel_last);
+            for (var t=0;t<rel_len-1;t++){
+                rise_nums.unshift('-');
+            }
+        };
+        var not_max='min',name='最小值';
+        if (rise_time.contains(max_time[0])){
+            not_max='max';name='最大值';
         }
-        $.each(exist_time,function (index,item) {
-            time.push(item);
-        })
-        $.each(rise_time,function (index,item) {
-            time.push(item);
-        })
-        $.each(fall_time,function (index,item) {
-            time.push(item);
-        })
-        series.push(
+        series_nums.push(
             {
-                name:'趋势预测',
+                name:'宏观趋势攀高',
                 type:'line',
-                smooth:true,
-                itemStyle: {
-                    normal: {
-                        color: '#1790cf',
-                    }
-                },
-                areaStyle: {
-                    normal: {
-                        shadowColor:'#1790cf',
-                    }
-                },
-                data:exist_nums,
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-                },
-                // markLine : {
-                //     data : [
-                //         {type : 'average', name: '平均值'}
-                //     ]
-                // }
-            },
-            {
-                name:'趋势攀高',
-                type:'line',
-                lineStyle:{
+                itemStyle:{
                     normal:{
-                        color: 'red',
-                        type:'dotted'
-                    }
+                        color:'red',
+                        lineStyle:{
+                            color: 'red',
+                            type:'dotted'
+                        },
+                    },
+
                 },
                 data:rise_nums,
-            },
+                markPoint : {
+                    data : [
+                        {type : not_max, name: name},
+                    ]
+                },
+            }
+        );
+    };
+    if (fall_len!=0){
+        if (rel_len!=0&&rise_len!=0){
+            fall_nums.unshift(rise_nums[rise_nums-1]);
+            for (var t=0;t<(rel_len+rise_len-2);t++){
+                fall_nums.unshift('-');
+            }
+        }else if (rel_len!=0 && rise_len==0){
+            fall_nums.unshift(exist_nums[rel_len-1]);
+            for (var t=0;t<rel_len-1;t++){
+                fall_nums.unshift('-');
+            }
+        }else if (rise_len!=0&&rel_len==0){
+            fall_nums.unshift(rise_nums[rel_len-1]);
+            for (var t=0;t<rise_len-1;t++){
+                fall_nums.unshift('-');
+            }
+        }
+        var not_max='min',name='最小值';
+        if (fall_time.contains(max_time[0])){
+            not_max='max',name='最大值';
+        }
+        series_nums.push(
             {
-                name:'趋势走低',
+                name:'宏观趋势走低',
                 type:'line',
-                lineStyle:{
+                itemStyle:{
                     normal:{
-                        color: 'green',
-                        type:'dotted'
+                        color:'green',
+                        lineStyle:{
+                            color: 'green',
+                            type:'dotted'
+                        },
                     }
                 },
                 data:fall_nums,
+                markPoint : {
+                    data : [
+                        {type : not_max, name: name},
+                    ]
+                },
             }
         );
-    }
+    };
+    var _time=exist_time.concat(rise_time).concat(fall_time);
+    $.each(_time,function (index,item) {
+        series_time.push(getLocalTime(item));
+    })
 
     var option = {
         title : {
@@ -231,17 +252,28 @@ function current(data) {
             // subtext: '纯属虚构'
         },
         tooltip : {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter:function (v) {
+                if (v[0].value!=undefined){
+                    return v[0].seriesName + '<br/>'+v[0].name+'<br/>'+v[0].value;
+                }
+                if (v[1].value!=undefined){
+                    return v[1].seriesName + '<br/>'+v[1].name+'<br/>'+v[1].value;
+                }
+                if (v[2].value!=undefined){
+                    return v[2].seriesName + '<br/>'+v[2].name+'<br/>'+v[2].value;
+                }
+            }
         },
         legend: {
-            // data:['欺诈电话']
+            data:['宏观趋势预测','宏观趋势攀高','宏观趋势走低']
         },
         calculable : true,
         xAxis : [
             {
                 type : 'category',
                 boundaryGap : false,
-                data: time,
+                data: series_time,
                 axisLabel: {
                     textStyle: {
                         color: 'black',
@@ -264,7 +296,7 @@ function current(data) {
                 }
             }
         ],
-        series : series
+        series : series_nums
     };
     // 为echarts对象加载数据
     myChart.setOption(option);
@@ -291,7 +323,6 @@ function forward_discussion(data){
     var data=eval(data);
     f_d_data=data;
     _wei_f_D(f_d_data.hot_retweeted);
-    console.log(data)
 }
 $('#forward').on('click',function () {
     _wei_f_D(f_d_data.hot_retweeted);
