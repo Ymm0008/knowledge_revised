@@ -1,5 +1,8 @@
 //-------------事件------------
-var recommend_style='recommend',tt=0;
+if (node_type=='event'){
+    recommend_style='recommend';
+}
+var tt=0;
 function event_type_2(value) {
     if(value==2){
         $('.event .manual').show();
@@ -32,8 +35,8 @@ function event_type_2(value) {
 function getLocalTime(nS) {
     return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,10)
 };
-// var timestamp = Date.parse(new Date()),
-var timestamp = 1479484800,
+var timestamp = Date.parse(new Date()),
+// var timestamp = 1479484800,
     mid,key_string,time;
 function weibo_content() {
     function place() {
@@ -655,7 +658,7 @@ function event_task_renew() {
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40, 80],//分页步进值
+            pageList: [5, 20, 40],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: false,//回车搜索
@@ -738,7 +741,7 @@ function event_task_renew() {
                             if (row.end_ts > Date.parse(new Date())){
                                 return '正在跟踪';
                             }else if (row.end_ts <= Date.parse(new Date())){
-                                return '<a style="cursor: pointer;">计算完成</a>';
+                                return '<a style="cursor: pointer;" onclick="_open2(\''+row.en_name+'\')">计算完成</a>';
                             }
                         }
 
@@ -767,7 +770,9 @@ function event_task_renew() {
     };
 }
 event_task_renew();
-
+function _open2(ID) {
+    window.open('/index/event/?uid='+ID);
+}
 //--事件---推荐事件
 var event_type=$('#event_lx-1').val;
 // function event_lx(value) {

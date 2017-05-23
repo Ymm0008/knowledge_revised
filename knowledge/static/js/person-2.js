@@ -375,7 +375,7 @@ $.each(key_words,function (index,item) {
     key_list.push(
         {
             name: item[0],
-            value: item[1],
+            value: item[1]*10,
             itemStyle: createRandomItemStyle()
         }
     )
@@ -405,12 +405,12 @@ if (key_list.length==0){
                 series: [{
                     name: '关键词',
                     type: 'wordCloud',
-                    size: ['80%', '80%'],
+                    size: ['90%', '90%'],
                     textRotation : [0, 0, 0, 0],
-                    textPadding: 0,
+                    textPadding: 6,
                     autoSize: {
                         enable: true,
-                        minSize: 14
+                        minSize: 16
                     },
                     data: key_list
                 }]
@@ -435,7 +435,7 @@ if (result_1.hashtag==''){
         topic_list.push(
             {
                 name: item,
-                value:20,
+                value:30,
                 itemStyle: createRandomItemStyle()
             }
         )
@@ -459,12 +459,12 @@ if (result_1.hashtag==''){
                 series: [{
                     name: '微话题',
                     type: 'wordCloud',
-                    size: ['80%', '80%'],
+                    size: ['90%', '90%'],
                     textRotation : [0, 0, 0, 0],
-                    textPadding: 0,
+                    textPadding: 6,
                     autoSize: {
                         enable: true,
-                        minSize: 14
+                        minSize: 16
                     },
                     data: topic_list,
                 }],

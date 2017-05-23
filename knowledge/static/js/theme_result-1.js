@@ -701,7 +701,6 @@ function user_tag(data) {
         )
     });
 
-console.log(user_key_series)
 if (user_key_series.length==0){
     $('#label_left').html('暂无数据');
 }else {
