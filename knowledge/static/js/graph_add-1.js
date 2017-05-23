@@ -730,9 +730,10 @@ function type_1(value) {
         type='influence';
         $('#node_list').css({display:'block'});
         $('#event_list').css({display:'none'});
-        $('.count_task').css({display:'block'});
-        $('.count_task_2').css({display:'none'});
+        // $('.count_task').css({display:'block'});
+        // $('.count_task_2').css({display:'none'});
         $('.event_task').css({display:'none'});
+        task_renew()
     }else if (value==2) {
         $('.user').hide();
         $('.event').show();
@@ -742,8 +743,9 @@ function type_1(value) {
         node_type='event';
         $('#node_list').css({display:'none'});
         $('#event_list').css({display:'block'});
-        $('.count_task').css({display:'none'});
-        $('.count_task_2').css({display:'none'});
+        // $('.count_task').css({display:'none'});
+        // $('.count_task_2').css({display:'none'});
+        task_renew();
         $('.event_task').css({display:'block'});
     }else if (value==3){
         $('.user').hide();
@@ -755,9 +757,10 @@ function type_1(value) {
         type='influence';
         $('#node_list').css({display:'block'});
         $('#event_list').css({display:'none'});
-        $('.count_task').css({display:'none'});
+        task_renew();
+        // $('.count_task').css({display:'none'});
         $('.event_task').css({display:'none'});
-        $('.count_task_2').css({display:'block'});
+        // $('.count_task_2').css({display:'block'});
     }
 };
 
@@ -851,7 +854,6 @@ function type_2_age(value) {
         $('.agency .manual-1').hide();
         $('.agency .manual').hide();
     }else {
-        console.log(value)
         $('.agency #tui_shou_age').empty();
         $('.agency #tui_shou_age').append(
             '<option value="4">文件导入</option>'+
@@ -894,14 +896,14 @@ $('.add_sure').on('click',function () {
     if (node_type=='event'){
         null;
     }else {
-        var date='2016-11-27';
-        // if (node_type=='user'){
-        //     date=$('#task_time').val();
-        // }else if (node_type=='org'){
-        //     date=$('#task_time_age').val();
-        // };
-        var submit_user='admin';
-        // var submit_user=$('#name').text();
+        // var date='2016-11-27';
+        if (node_type=='user'){
+            date=$('#task_time').val();
+        }else if (node_type=='org'){
+            date=$('#task_time_age').val();
+        };
+        // var submit_user='admin';
+        var submit_user=$('#name').text();
         if (recommendation_manual=='r'){
             $('#recommend').empty();
             if (recommend=='关注度'){
@@ -1042,8 +1044,8 @@ function handleFileSelect(evt){
 };
 
 function sure_task() {
-    // var date=$('#task_time').val();
-    var date='2016-11-27';
+    var date=$('#task_time').val();
+    // var date='2016-11-27';
     var submit_user=$('#name').text();
     // var submit_user='admin';
     var status,user_rel=[];
@@ -1052,7 +1054,6 @@ function sure_task() {
     $("#relation_node .rel_list input:checkbox:checked").each(function (index,item) {
         user_rel.push($(this).val());
     });
-    console.log(user_rel)
     var user_rel_list=user_rel.join(',');
     var n_t=0;
     if(node_type=='user'){
@@ -1062,9 +1063,6 @@ function sure_task() {
     }
     if (recommendation_manual=='m'){
         var input_data,updata;
-        // console.log(recommend_style)
-        // recommend_style = 'upload'
-        // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
         if (recommend_style=='upload'){
             updata=updata_file;
         }else {
@@ -1088,15 +1086,16 @@ function sure_task() {
         var new_task_url='/construction/admin_identify_in/?date='+date+'&uid_list='+uid_list+
             '&user_rel='+user_rel_list+'&status='+status+'&recommend_style='+type+
             '&node_type='+n_t+'&submit_user='+submit_user;
+        $.ajax({
+            url: new_task_url,
+            type: 'GET',
+            dataType: 'json',
+            async: true,
+            success:fail_or_success
+        });
     }
 
-    $.ajax({
-        url: new_task_url,
-        type: 'GET',
-        dataType: 'json',
-        async: true,
-        success:fail_or_success
-    });
+
 }
 //创建成功与失败
 function fail_or_success(data) {
@@ -1158,14 +1157,13 @@ function task_renew() {
 task_renew();
 function task_list(data) {
     var data = eval(data);
-    // console.log(data)
     $('#count').bootstrapTable('load', data);
     $('#count').bootstrapTable({
         data:data,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 20, 40],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -1247,7 +1245,7 @@ function task_list(data) {
                     }else if (row[2]==3){
                         return '正在计算';
                     }else if (row[2]==4){
-                        return '<a style="cursor: pointer;">计算完成</a>';
+                        return '<a style="cursor: pointer;" onclick="_open(\''+row[0]+'\')">计算完成</a>';
                     }
 
                 },
@@ -1364,7 +1362,7 @@ function task_list_2(data) {
                     }else if (row[2]==3){
                         return '正在计算';
                     }else if (row[2]==4){
-                        return '<a style="cursor: pointer;">计算完成</a>';
+                        return '<a style="cursor: pointer;" onclick="_open(\''+row[0]+'\')>计算完成</a>';
                     }
 
                 },
@@ -1390,7 +1388,15 @@ function task_list_2(data) {
         // }
     });
 };
-
+function _open(ID) {
+    var open_type='';
+    if (node_type=='user'){
+        open_type='person';
+    }else if (node_type=='org'){
+        open_type='organization';
+    }
+    window.open('/index/'+open_type+'/?uid='+ID);
+}
 
 //---更新--
 var relation=[],uid_update,r_style;

@@ -200,7 +200,6 @@ function createRandomItemStyle() {
 var topics=result_1.topics;
 var topics_list='';
 $.each(topics,function (index,item) {
-    console.log(item)
     topics_list+='<p><b>话题'+(index+1)+'：</b><span>'+item+'</span></p>';
 });
 $('#topic_trend').html(topics_list);

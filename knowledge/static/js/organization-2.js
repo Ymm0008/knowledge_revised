@@ -375,7 +375,7 @@ $.each(key_words,function (index,item) {
     key_list.push(
         {
             name: item[0],
-            value: item[1],
+            value: item[1]*10,
             itemStyle: createRandomItemStyle()
         }
     )
@@ -405,7 +405,7 @@ if (key_list.length==0){
                 series: [{
                     name: '关键词',
                     type: 'wordCloud',
-                    size: ['80%', '80%'],
+                    size: ['90%', '90%'],
                     textRotation : [0, 0, 0, 0],
                     textPadding: 0,
                     autoSize: {
@@ -433,7 +433,7 @@ $.each(topic_words,function (index,item) {
     topic_list.push(
         {
             name: item,
-            value:20,
+            value:30,
             itemStyle: createRandomItemStyle()
         }
     )

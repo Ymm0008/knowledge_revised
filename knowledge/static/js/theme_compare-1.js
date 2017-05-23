@@ -557,7 +557,7 @@ function keywords_include(data) {
             series_1.push(
                 {
                     name: data1[a],
-                    value: 20,
+                    value: 30,
                     itemStyle: createRandomItemStyle()
                 }
             );
@@ -569,7 +569,7 @@ function keywords_include(data) {
             series_2.push(
                 {
                     name: data2[b],
-                    value: 20,
+                    value: 30,
                     itemStyle: createRandomItemStyle()
                 }
             );
@@ -695,7 +695,7 @@ function tag(data) {
             series_1.push(
                 {
                     name: data1[a],
-                    value: 20,
+                    value: 30,
                     itemStyle: createRandomItemStyle()
                 }
             );
@@ -707,7 +707,7 @@ function tag(data) {
             series_2.push(
                 {
                     name: data2[b],
-                    value: 20,
+                    value: 30,
                     itemStyle: createRandomItemStyle()
                 }
             );

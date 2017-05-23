@@ -9,7 +9,6 @@ $.ajax({
 });
 function include_user(data) {
     var data = eval(data);
-    console.log(data)
     $('#person').bootstrapTable('load', data);
     $('#person').bootstrapTable({
         data:data,
