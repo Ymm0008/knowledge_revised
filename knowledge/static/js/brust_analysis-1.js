@@ -1,7 +1,4 @@
 //时间戳转换
-function getLocalTime(nS) {
-    return new Date(parseInt(nS) * 1000).toLocaleString().substr(0,10);
-};
 Array.prototype.contains = function (obj) {
     var i = this.length;
     while (i--) {
@@ -139,9 +136,9 @@ function current(data) {
     var rel_last;
     if (rel_len!=0){
         rel_last=exist_nums[rel_len-1];
-        var not_max='min',name='最小值';
+        var not_type1='none';
         if (exist_time.contains(max_time[0])){
-            not_max='max',name='最大值';
+            not_type1='pin';
         }
         series_nums.push(
             {
@@ -156,9 +153,9 @@ function current(data) {
                 },
                 data:exist_nums,
                 markPoint : {
-                    //symbol: 'none',//symbol: 'pin',
+                    symbol: not_type1,//symbol: 'pin',
                     data : [
-                        {type : not_max, name: name},
+                        {type : 'max', name: '最大值'},
                     ]
                 },
             }
@@ -171,9 +168,9 @@ function current(data) {
                 rise_nums.unshift('-');
             }
         };
-        var not_max='min',name='最小值';
+        var not_type2='none';
         if (rise_time.contains(max_time[0])){
-            not_max='max';name='最大值';
+            not_type2='pin';
         }
         series_nums.push(
             {
@@ -191,8 +188,9 @@ function current(data) {
                 },
                 data:rise_nums,
                 markPoint : {
+                    symbol: not_type2,//symbol: 'pin',
                     data : [
-                        {type : not_max, name: name},
+                        {type : 'max', name: '最大值'},
                     ]
                 },
             }
@@ -215,9 +213,9 @@ function current(data) {
                 fall_nums.unshift('-');
             }
         }
-        var not_max='min',name='最小值';
+        var not_type3='none';
         if (fall_time.contains(max_time[0])){
-            not_max='max',name='最大值';
+            not_type3='pin';
         }
         series_nums.push(
             {
@@ -234,8 +232,9 @@ function current(data) {
                 },
                 data:fall_nums,
                 markPoint : {
+                    symbol: not_type3,//symbol: 'pin',
                     data : [
-                        {type : not_max, name: name},
+                        {type : 'max', name: '最大值'},
                     ]
                 },
             }
