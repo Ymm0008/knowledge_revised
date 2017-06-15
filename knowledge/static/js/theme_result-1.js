@@ -9,13 +9,27 @@ $.ajax({
 });
 function things(data) {
     var data = eval(data);
-    $('#things').bootstrapTable('load', data);
+    var things=[];
+    $.each(data,function (index,item) {
+        things.push({
+            'id':item[0],
+            'event_name':item[1],
+            'event_type':item[2],
+            'date':item[3],
+            'location':item[4],
+            'people':item[5],
+            'weibo':item[6],
+            'keywords':item[7],
+            'label':item[8],
+        })
+    });
+    $('#things').bootstrapTable('load', things);
     $('#things').bootstrapTable({
-        data:data,
+        data:things,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 10],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -30,106 +44,106 @@ function things(data) {
         columns: [
             {
                 title: "事件名称",//标题
-                field: "",//键名
+                field: "event_name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[1];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[1];
+                // }
             },
             {
                 title: "事件类型",//标题
-                field: "",//键名
+                field: "event_type",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'||row[2]=='null'){
+                    if (row.event_type==''||row.event_type=='NULL'||row.event_type=='unknown'||row.event_type=='null'){
                         return '暂无';
                     }else {
-                        if (row[2]=='other'){
+                        if (row.event_type=='other'){
                             return '其他';
                         }else {
-                            return row[2];
+                            return row.event_type;
                         }
                     }
                 }
             },
             {
                 title: "发生时间",//标题
-                field: "",//键名
+                field: "date",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'||row[3]=='null'){
+                    if (row.date==''||row.date=='NULL'||row.date=='unknown'||row.date=='null'){
                         return '暂无';
                     }else {
-                        return row[3];
+                        return row.date;
                     }
                 },
             },
             {
                 title: "发生地点",//标题
-                field: "",//键名
+                field: "location",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4]==''||row[4]=='NULL'||row[4]=='unknown'||row[4]=='null'){
+                    if (row.location==''||row.location=='NULL'||row.location=='unknown'||row.location=='null'){
                         return '暂无';
                     }else {
-                        return row[4];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "参与人数",//标题
-                field: "",//键名
+                field: "people",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'||row[5]=='null'){
+                    if (row.people==''||row.people=='NULL'||row.people=='unknown'||row.people=='null'){
                         return '暂无';
                     }else {
-                        return row[5];
+                        return row.people;
                     }
                 },
             },
             {
                 title: "微博数量",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[6]==''||row[6]=='NULL'||row[6]=='unknown'||row[6]=='null'){
+                    if (row.weibo==''||row.weibo=='NULL'||row.weibo=='unknown'||row.weibo=='null'){
                         return '暂无';
                     }else {
-                        return row[6];
+                        return row.weibo;
                     }
                 },
             },
             {
                 title: "自动标签",//标题
-                field: "",//键名
+                field: "keywords",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[7].length==0||row[7]==''||row[7]=='null'){
+                    if (row.keywords.length==0||row.keywords==''||row.keywords=='null'){
                         return '暂无';
                     }else {
-                        var words=row[7];
+                        var words=row.keywords;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -143,16 +157,16 @@ function things(data) {
             },
             {
                 title: "业务标签",//标题
-                field: "",//键名
+                field: "label",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[8].length==0||row[8]==''||row[8]=='null'){
+                    if (row.label.length==0||row.label==''||row.label=='null'){
                         return '暂无';
                     }else {
-                        var words=row[8];
+                        var words=row.label;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -167,7 +181,7 @@ function things(data) {
         ],
         onClickCell: function (field, value, row, $element) {
             if ($element[0].cellIndex==0){
-                window.open('/index/event/?user_id='+row[0]);
+                window.open('/index/event/?user_id='+row.id);
             }
         },
     });
@@ -364,13 +378,21 @@ function network(data) {
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-1').text(data.relation_count);
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-2').text(data.relation_degree.toFixed(2));
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-3').text(data.conclusion);
-    $('#network_list').bootstrapTable('load', data.relation_table);
+    var net=[];
+    $.each(data.relation_table,function (index,item) {
+        net.push({
+            'event_name1':item[0],
+            'event_name2':item[2],
+            'relation':item[1],
+        })
+    })
+    $('#network_list').bootstrapTable('load', net);
     $('#network_list').bootstrapTable({
-        data:data.relation_table,
+        data:net,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 15],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -385,36 +407,40 @@ function network(data) {
         columns: [
             {
                 title: "事件名称",//标题
-                field: "",//键名
+                field: "event_name1",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[0];
+                // }
             },
             {
                 title: "关系",//标题
-                field: "",//键名
+                field: "relation",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.relation==''||row.relation=='unknown'||row.relation=='NULL'){
+                        return '未知';
+                    }else {
+                        return row.relation;
+                    }
                 }
             },
             {
                 title: "事件名称",//标题
-                field: "",//键名
+                field: "event_name2",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[2];
-                },
+                // formatter: function (value, row, index) {
+                //     return row[2];
+                // },
             },
         ],
     });
@@ -561,7 +587,6 @@ $.ajax({
 });
 function character(data) {
     var data = eval(data);
-    console.log(data)
     $('#ranking').bootstrapTable('load', data);
     $('#ranking').bootstrapTable({
         data:data,
@@ -621,7 +646,7 @@ function character(data) {
             },
             {
                 title: "参与事件数量",//标题
-                field: "",//键名
+                field: "related_event",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
@@ -636,7 +661,7 @@ function character(data) {
             },
             {
                 title: "参与事件",//标题
-                field: "",//键名
+                field: "related_event",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
@@ -680,7 +705,6 @@ $.ajax({
 var user_key_series=[],user_tag_series=[];
 
 function user_tag(data) {
-    console.log(data)
     var data = eval(data);
     $.each(data.keywords, function (index, item) {
         user_key_series.push(

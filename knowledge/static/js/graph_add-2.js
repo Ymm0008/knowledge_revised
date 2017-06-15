@@ -658,7 +658,7 @@ function event_task_renew() {
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40],//分页步进值
+            pageList: [5, 15],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: false,//回车搜索

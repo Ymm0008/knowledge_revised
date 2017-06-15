@@ -8,15 +8,14 @@ $.ajax({
 });
 
     function draw_table(data){
-        console.log(data);
-        data=eval(data);
+        var data=eval(data);
         $('#sysadmin_topic_table').bootstrapTable('load',data)
         $('#sysadmin_topic_table').bootstrapTable({
             data:data,
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40, 80],//分页步进值
+            pageList: [5, 15],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: true,//回车搜索
@@ -76,7 +75,7 @@ $.ajax({
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (value.length==0)
+                    if (value.length==0||(value.length==1&&value[0]==''))
                         return '暂无';
                     else
                         return value;

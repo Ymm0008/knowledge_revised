@@ -219,9 +219,9 @@ if (flag==1){
             '                        <img src="'+photo+'">'+
             '                    </div>'+
             '                    <div class="details-1-bottom">'+
-            '                        <img src="/static/images/gov_wei.png" title="位置"> <span class="position">'+place+'</span>'+
-            '                        <img src="/static/images/gov_people.png" title="粉丝数"> <span class="join">'+data.fansnum+'</span>'+
-            '                        <img src="/static/images/gov_circle.png" class="heart org_xin">'+
+            '                        <img src="/static/images/gov_wei.png" title="位置"> <span class="position">'+place+'</span>&nbsp;'+
+            '                        <img src="/static/images/gov_people.png" title="粉丝数" style="position: relative;top: -2px;"> <span class="join">'+data.fansnum+'</span>&nbsp;'+
+            '                        <img src="/static/images/gov_circle.png" class="heart org_xin" style="position: relative;top: -2px;">'+
             '                    </div>'+
             '                </div>'+
             '                <div class="details-2">'+

@@ -9,13 +9,27 @@ $.ajax({
 });
 function include_user(data) {
     var data = eval(data);
-    $('#person').bootstrapTable('load', data);
+    var peoples=[];
+    $.each(data,function (index,item) {
+        peoples.push({
+            'id':item[0],
+            'name':item[1],
+            'location':item[2],
+            'influence':item[3],
+            'active':item[4],
+            'sensitive':item[5],
+            'keywords':item[6],
+            'label':item[7],
+            'type':item[8],
+        })
+    });
+    $('#person').bootstrapTable('load', peoples);
     $('#person').bootstrapTable({
-        data:data,
+        data:peoples,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 20],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -30,122 +44,122 @@ function include_user(data) {
         columns: [
             {
                 title: "用户ID",//标题
-                field: "",//键名
+                field: "id",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[0];
-                    if (row[1]==''||row[1]=='NULL'||row[1]=='unknown'){
-                        include_user_list.push('<span>'+row[0]+'</span>');
+                    return row.id;
+                    if (row.name==''||row.name=='NULL'||row.name=='unknown'){
+                        include_user_list.push('<span>'+row.id+'</span>');
                     }else {
-                        include_user_list.push(row[1]+'('+'<span>'+row[0]+'</span>'+')');
+                        include_user_list.push(row.name+'('+'<span>'+row.id+'</span>'+')');
                     }
                 }
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[1]==''||row[1]=='NULL'||row[1]=='unknown'){
-                        return row[0];
+                    if (row.name==''||row.name=='NULL'||row.name=='unknown'){
+                        return row.id;
                     }else {
-                        return row[1];
+                        return row.name;
                     }
                 }
             },
             {
                 title: "注册地",//标题
-                field: "",//键名
+                field: "location",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'){
+                    if (row.location==''||row.location=='NULL'||row.location=='unknown'){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "影响力",//标题
-                field: "",//键名
+                field: "influence",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'){
+                    if (row.influence==''||row.influence=='NULL'||row.influence=='unknown'){
                         return 0;
                     }else {
-                        return row[3].toFixed(2);
+                        return row.influence.toFixed(2);
                     }
                 },
             },
             {
                 title: "活跃度",//标题
-                field: "",//键名
+                field: "active",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4]==''||row[4]=='NULL'||row[4]=='unknown'){
+                    if (row.active==''||row.active=='NULL'||row.active=='unknown'){
                         return 0;
                     }else {
-                        return row[4].toFixed(2);
+                        return row.active.toFixed(2);
                     }
                 },
             },
             {
                 title: "敏感度",//标题
-                field: "",//键名
+                field: "sensitive",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'){
+                    if (row.sensitive==''||row.sensitive=='NULL'||row.sensitive=='unknown'){
                         return 0;
                     }else {
-                        return row[5].toFixed(2);
+                        return row.sensitive.toFixed(2);
                     }
                 },
             },
             {
                 title: "自动标签",//标题
-                field: "",//键名
+                field: "keywords",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[6]=='unknown'||row[6]==''){
+                    if (row.keywords=='unknown'||row.keywords==''){
                         return '暂无';
                     }else {
-                        return row[6].toString().split('&').slice(0,5);
+                        return row.keywords.toString().split('&').slice(0,5);
                     }
                 },
             },
             {
                 title: "业务标签",//标题
-                field: "",//键名
+                field: "label",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[7]=='unknown'||row[7]==''){
+                    if (row.label=='unknown'||row.label==''){
                         return '暂无';
                     }else {
-                        return row[7].toString().split('&').slice(0,5);
+                        return row.label.toString().split('&').slice(0,5);
                     }
                     // if (row[8].length==0||row[8]==''){
                     //     return '暂无';
@@ -161,10 +175,10 @@ function include_user(data) {
         ],
         onClickCell: function (field, value, row, $element) {
             if ($element[0].cellIndex==0){
-                if (row[8]=='org'){
-                    window.open('/index/organization/?user_id='+row[0]);
+                if (row.type=='org'){
+                    window.open('/index/organization/?user_id='+row.id);
                 }else {
-                    window.open('/index/person/?user_id='+row[0]);
+                    window.open('/index/person/?user_id='+row.id);
                 }
             }
         },
@@ -201,13 +215,23 @@ function network(data) {
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-1').text(data.relation_count);
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-2').text(data.relation_degree.toFixed(2));
     $('#container #content_left .network_analysis .net_detail .detail-1 .det-3').text(data.conclusion);
-    $('#network_list').bootstrapTable('load', data.relation_table);
+    var peo=[];
+    $.each(data.relation_table,function (index,item) {
+        peo.push({
+            'uid1':item[0],
+            'name1':item[1],
+            'relation':item[2],
+            'uid2':item[3],
+            'name2':item[4],
+        })
+    })
+    $('#network_list').bootstrapTable('load', peo);
     $('#network_list').bootstrapTable({
-        data:data.relation_table,
+        data:peo,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 20,],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -222,64 +246,68 @@ function network(data) {
         columns: [
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid1",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[0];
+                // }
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name1",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[1]==''||row[1]=='NULL'||row[1]=='unknown'){
-                        return row[0];
+                    if (row.name1==''||row.name1=='NULL'||row.name1=='unknown'){
+                        return row.uid1;
                     }else {
-                        return row[1];
+                        return row.name1;
                     }
                 }
             },
             {
                 title: "关系",//标题
-                field: "",//键名
+                field: "relation",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[2];
+                    if (row.relation==''||row.relation=='NULL'||row.relation=='unknown'){
+                        return '未知';
+                    }else {
+                        return row.relation;
+                    }
                 },
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid2",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[3];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[3];
+                // }
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name2",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4]==''||row[4]=='NULL'||row[4]=='unknown'){
-                        return row[3];
+                    if (row.name2==''||row.name2=='NULL'||row.name2=='unknown'){
+                        return row.uid2;
                     }else {
-                        return row[4];
+                        return row.name2;
                     }
                 }
             },
@@ -322,7 +350,6 @@ $.ajax({
 });
 var key_series=[],tag_series=[];
 function key_tag(data) {
-    console.log(data.mark)
     var data=eval(data);
     $.each(data.keywords,function (index,item) {
         key_series.push(
@@ -504,7 +531,7 @@ function character(data) {
             },
             {
                 title: "关联用户",//标题
-                field: "",//键名
+                field: "user",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平

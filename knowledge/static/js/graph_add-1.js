@@ -20,18 +20,30 @@ $.ajax({
 function recommend_1(data1) {
     var data1 = eval(data1);
     uid=[];
+    var graph_add=[];
+    $.each(data1,function (index,item) {
+        graph_add.push({
+            'sort':index+1,
+            'uid':item[0],
+            'name':item[1],
+            'location':item[2],
+            'weibo':item[3],
+            'fans':item[4],
+            'influ':item[5],
+        })
+    });
     $('.recommend').css({display:'block'});
     $('.recommend2').css({display:'none'});
     $('.recommend3').css({display:'none'});
     $('.recommend4').css({display:'none'});
     $('.recommend5').css({display:'none'});
-    $('#recommend').bootstrapTable('load', data1);
+    $('#recommend').bootstrapTable('load', graph_add);
     $('#recommend').bootstrapTable({
-        data:data1,
+        data:graph_add,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 15],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -45,35 +57,34 @@ function recommend_1(data1) {
         columns: [
             {
                 title: "序号",//标题
-                field: "",//键名
+                field: "sort",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return index+1;
-                }
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.name==''||row.name=='unknown'||row.name=='NULL'){
+                        return row.uid;
+                    }else {
+                        return row.name;
+                    }
                 },
             },
             {
@@ -84,44 +95,44 @@ function recommend_1(data1) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''){
+                    if (row.location==''){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "微博数",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[3];
+                    return row.weibo;
                 },
             },
             {
                 title: "粉丝数",//标题
-                field: "",//键名
+                field: "fans",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[4];
+                    return row.fans;
                 },
             },
             {
                 title: '影响力',//标题
-                field: "",//键名
+                field: "influ",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5].toFixed(2);
+                    return row.influ.toFixed(2);
                 },
             },
             //多选框
@@ -135,16 +146,16 @@ function recommend_1(data1) {
 
         ],
         onCheck:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheck:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
         onCheckAll:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheckAll:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
     });
 };
@@ -152,18 +163,30 @@ function recommend_1(data1) {
 function recommend_2(data2) {
     var data2 = eval(data2);
     uid=[];
+    var graph_add=[];
+    $.each(data2,function (index,item) {
+        graph_add.push({
+            'sort':index+1,
+            'uid':item[0],
+            'name':item[1],
+            'location':item[2],
+            'weibo':item[3],
+            'fans':item[4],
+            'influ':item[5],
+        })
+    });
     $('.recommend').css({display:'none'});
     $('.recommend2').css({display:'block'});
     $('.recommend3').css({display:'none'});
     $('.recommend4').css({display:'none'});
     $('.recommend5').css({display:'none'});
-    $('#recommend2').bootstrapTable('load', data2);
+    $('#recommend2').bootstrapTable('load', graph_add);
     $('#recommend2').bootstrapTable({
-        data:data2,
+        data:graph_add,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 15],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -178,35 +201,34 @@ function recommend_2(data2) {
         columns: [
             {
                 title: "序号",//标题
-                field: "",//键名
+                field: "sort",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return index+1;
-                }
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.name==''||row.name=='unknown'||row.name=='NULL'){
+                        return row.uid;
+                    }else {
+                        return row.name;
+                    }
                 },
             },
             {
@@ -217,70 +239,44 @@ function recommend_2(data2) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''){
+                    if (row.location==''){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
-                },
-            },
-            {
-                title: "粉丝数",//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[3];
                 },
             },
             {
                 title: "微博数",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[4]
+                    return row.weibo;
                 },
             },
             {
-                title: '敏感度',//标题
-                field: "",//键名
+                title: "粉丝数",//标题
+                field: "fans",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if(row[5]==''){
-                        return 0;
-                    }else {
-                        return row[5].toFixed(2);
-                    }
+                    return row.fans;
                 },
             },
             {
-                title: '敏感词',//标题
-                field: "",//键名
+                title: '影响力',//标题
+                field: "influ",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if(row[6].length==0){
-                        return '暂无';
-                    }else {
-                        var words=row[6];
-                        if (words.length<=5){
-                            return words.join(',');
-                        }else {
-                            var key=words.splice(0,5).join(',');
-                            var tit=words.splice(5).join(',');
-                            return '<p title="'+tit+'">'+key+'</p> ';
-                        }
-                    }
+                    return row.influ.toFixed(2);
                 },
             },
             //多选框
@@ -294,16 +290,16 @@ function recommend_2(data2) {
 
         ],
         onCheck:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheck:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
         onCheckAll:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheckAll:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
     });
 };
@@ -311,14 +307,26 @@ function recommend_2(data2) {
 function recommend_3(data3) {
     var data3 = eval(data3);
     uid=[];
+    var graph_add=[];
+    $.each(data3,function (index,item) {
+        graph_add.push({
+            'sort':index+1,
+            'uid':item[0],
+            'name':item[1],
+            'location':item[2],
+            'weibo':item[3],
+            'fans':item[4],
+            'influ':item[5],
+        })
+    });
     $('.recommend').css({display:'none'});
     $('.recommend2').css({display:'none'});
     $('.recommend3').css({display:'block'});
     $('.recommend4').css({display:'none'});
     $('.recommend5').css({display:'none'});
-    $('#recommend3').bootstrapTable('load', data3);
+    $('#recommend3').bootstrapTable('load', graph_add);
     $('#recommend3').bootstrapTable({
-        data:data3,
+        data:graph_add,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
@@ -336,35 +344,34 @@ function recommend_3(data3) {
         columns: [
             {
                 title: "序号",//标题
-                field: "",//键名
+                field: "sort",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return index+1;
-                }
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.name==''||row.name=='unknown'||row.name=='NULL'){
+                        return row.uid;
+                    }else {
+                        return row.name;
+                    }
                 },
             },
             {
@@ -375,55 +382,44 @@ function recommend_3(data3) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''){
+                    if (row.location==''){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "微博数",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[3];
+                    return row.weibo;
                 },
             },
             {
                 title: "粉丝数",//标题
-                field: "",//键名
+                field: "fans",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[4]
+                    return row.fans;
                 },
             },
             {
                 title: '影响力',//标题
-                field: "",//键名
+                field: "influ",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5].toFixed(2);
-                },
-            },
-            {
-                title: '关联用户',//标题
-                field: "",//键名
-                sortable: true,//是否可排序
-                order: "desc",//默认排序方式
-                align: "center",//水平
-                valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[6];
+                    return row.influ.toFixed(2);
                 },
             },
             //多选框
@@ -437,16 +433,16 @@ function recommend_3(data3) {
 
         ],
         onCheck:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheck:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
         onCheckAll:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheckAll:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
     });
 };
@@ -454,14 +450,26 @@ function recommend_3(data3) {
 function recommend_4(data4) {
     var data4 = eval(data4);
     uid=[];
+    var graph_add=[];
+    $.each(data4,function (index,item) {
+        graph_add.push({
+            'sort':index+1,
+            'uid':item[0],
+            'name':item[1],
+            'location':item[2],
+            'weibo':item[3],
+            'fans':item[4],
+            'influ':item[5],
+        })
+    });
     $('.recommend').css({display:'none'});
     $('.recommend2').css({display:'none'});
     $('.recommend3').css({display:'none'});
     $('.recommend4').css({display:'block'});
     $('.recommend5').css({display:'none'});
-    $('#recommend4').bootstrapTable('load', data4);
+    $('#recommend4').bootstrapTable('load', graph_add);
     $('#recommend4').bootstrapTable({
-        data:data4,
+        data:graph_add,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
@@ -480,35 +488,34 @@ function recommend_4(data4) {
         columns: [
             {
                 title: "序号",//标题
-                field: "",//键名
+                field: "sort",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return index+1;
-                }
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.name==''||row.name=='unknown'||row.name=='NULL'){
+                        return row.uid;
+                    }else {
+                        return row.name;
+                    }
                 },
             },
             {
@@ -519,44 +526,44 @@ function recommend_4(data4) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''){
+                    if (row.location==''){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "微博数",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[3];
+                    return row.weibo;
                 },
             },
             {
                 title: "粉丝数",//标题
-                field: "",//键名
+                field: "fans",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[4];
+                    return row.fans;
                 },
             },
             {
                 title: '影响力',//标题
-                field: "",//键名
+                field: "influ",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5].toFixed(2);
+                    return row.influ.toFixed(2);
                 },
             },
             //多选框
@@ -570,16 +577,16 @@ function recommend_4(data4) {
 
         ],
         onCheck:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheck:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
         onCheckAll:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheckAll:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
     });
 };
@@ -587,14 +594,26 @@ function recommend_4(data4) {
 function recommend_5(data5) {
     var data5 = eval(data5);
     uid=[];
+    var graph_add=[];
+    $.each(data5,function (index,item) {
+        graph_add.push({
+            'sort':index+1,
+            'uid':item[0],
+            'name':item[1],
+            'location':item[2],
+            'weibo':item[3],
+            'fans':item[4],
+            'influ':item[5],
+        })
+    });
     $('.recommend').css({display:'none'});
     $('.recommend2').css({display:'none'});
     $('.recommend3').css({display:'none'});
     $('.recommend4').css({display:'none'});
     $('.recommend5').css({display:'block'});
-    $('#recommend5').bootstrapTable('load', data5);
+    $('#recommend5').bootstrapTable('load', graph_add);
     $('#recommend5').bootstrapTable({
-        data:data5,
+        data:graph_add,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
@@ -613,35 +632,34 @@ function recommend_5(data5) {
         columns: [
             {
                 title: "序号",//标题
-                field: "",//键名
+                field: "sort",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return index+1;
-                }
             },
             {
                 title: "UID",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.name==''||row.name=='unknown'||row.name=='NULL'){
+                        return row.uid;
+                    }else {
+                        return row.name;
+                    }
                 },
             },
             {
@@ -652,44 +670,44 @@ function recommend_5(data5) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''){
+                    if (row.location==''){
                         return '未知';
                     }else {
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "微博数",//标题
-                field: "",//键名
+                field: "weibo",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[3];
+                    return row.weibo;
                 },
             },
             {
                 title: "粉丝数",//标题
-                field: "",//键名
+                field: "fans",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[4];
+                    return row.fans;
                 },
             },
             {
                 title: '影响力',//标题
-                field: "",//键名
+                field: "influ",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5].toFixed(2);
+                    return row.influ.toFixed(2);
                 },
             },
             //多选框
@@ -703,16 +721,16 @@ function recommend_5(data5) {
 
         ],
         onCheck:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheck:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
         onCheckAll:function (row) {
-            uid.push(row[0]);
+            uid.push(row.uid);
         },
         onUncheckAll:function (row) {
-            uid.removeByValue(row[1]);
+            uid.removeByValue(row.uid);
         },
     });
 };
@@ -1157,13 +1175,23 @@ function task_renew() {
 task_renew();
 function task_list(data) {
     var data = eval(data);
-    $('#count').bootstrapTable('load', data);
+    var command=[];
+    $.each(data,function (index,item) {
+        command.push({
+            'uid':item[0],
+            'time':item[1],
+            'status':item[2],
+            'admin':item[5],
+            'add_way':item[6],
+        })
+    });
+    $('#count').bootstrapTable('load', command);
     $('#count').bootstrapTable({
-        data:data,
+        data:command,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40],//分页步进值
+        pageList: [5, 20],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -1178,74 +1206,82 @@ function task_list(data) {
         columns: [
             {
                 title: "人物名称",//标题
-                field: "",//键名
+                field: "uid",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[0];
+                // }
             },
             {
                 title: "添加方式",//标题
-                field: "",//键名
+                field: "add_way",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[6]=="influence"){
+                    if (row.add_way=="influence"){
                         return '影响力推荐';
-                    }else if(row[6]=="sensitive"){
+                    }else if(row.add_way=="sensitive"){
                         return '敏感度推荐';
-                    }else if(row[6]=="upload"){
+                    }else if(row.add_way=="upload"){
                         return '文件导入';
-                    }else if(row[6]=="write"){
+                    }else if(row.add_way=="write"){
                         return '手动输入';
-                    }else if(row[6]=="auto"){
+                    }else if(row.add_way=="auto"){
                         return '关注用户推荐';
                     }
                 }
             },
             {
                 title: "添加人",//标题
-                field: "",//键名
+                field: "admin",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5];
+                    if (row.admin==''||row.admin=='NULL'||row.admin=='unknown'){
+                        return '未知';
+                    }else {
+                        return row.admin;
+                    }
                 },
             },
             {
                 title: "提交时间",//标题
-                field: "",//键名
+                field: "time",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.time==''||row.time=='NULL'||row.time=='unknown'){
+                        return '未知';
+                    }else {
+                        return row.time;
+                    }
                 },
             },
             {
                 title: "任务状态",//标题
-                field: "",//键名
+                field: "status",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==1){
+                    if (row.status==1){
                         return '立即计算';
-                    }else if (row[2]==2){
+                    }else if (row.status==2){
                         return '预约计算';
-                    }else if (row[2]==3){
+                    }else if (row.status==3){
                         return '正在计算';
-                    }else if (row[2]==4){
-                        return '<a style="cursor: pointer;" onclick="_open(\''+row[0]+'\')">计算完成</a>';
+                    }else if (row.status==4){
+                        return '<a style="cursor: pointer;" onclick="_open(\''+row.uid+'\')">计算完成</a>';
                     }
 
                 },
@@ -1258,7 +1294,7 @@ function task_list(data) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row[1]+'\')">立即更新</a>';
+                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row.time+'\')">立即更新</a>';
                 },
             },
 
@@ -1274,13 +1310,23 @@ function task_list(data) {
 
 function task_list_2(data) {
     var data = eval(data);
-    $('#count_2').bootstrapTable('load', data);
+    var gov_command=[];
+    $.each(data,function (index,item) {
+        gov_command.push({
+            'name':item[0],
+            'time':item[1],
+            'status':item[2],
+            'admin':item[5],
+            'add_way':item[6],
+        })
+    });
+    $('#count_2').bootstrapTable('load', gov_command);
     $('#count_2').bootstrapTable({
-        data:data,
+        data:gov_command,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 15],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -1295,74 +1341,82 @@ function task_list_2(data) {
         columns: [
             {
                 title: "机构名称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[0];
+                // }
             },
             {
                 title: "添加方式",//标题
-                field: "",//键名
+                field: "add_way",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[6]=="influence"){
+                    if (row.add_way=="influence"){
                         return '影响力推荐';
-                    }else if(row[6]=="sensitive"){
+                    }else if(row.add_way=="sensitive"){
                         return '敏感度推荐';
-                    }else if(row[6]=="upload"){
+                    }else if(row.add_way=="upload"){
                         return '上传文件';
-                    }else if(row[6]=="write"){
+                    }else if(row.add_way=="write"){
                         return '手动输入';
-                    }else if(row[6]=="auto"){
+                    }else if(row.add_way=="auto"){
                         return '关注用户推荐';
                     }
                 }
             },
             {
                 title: "添加人",//标题
-                field: "",//键名
+                field: "admin",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[5];
+                    if (row.admin==''||row.admin=='NULL'||row.admin=='unknown'){
+                        return '未知';
+                    }else {
+                        return row.admin;
+                    }
                 },
             },
             {
                 title: "提交时间",//标题
-                field: "",//键名
+                field: "time",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return row[1];
+                    if (row.time==''||row.time=='NULL'||row.time=='unknown'){
+                        return '未知';
+                    }else {
+                        return row.time;
+                    }
                 },
             },
             {
                 title: "任务状态",//标题
-                field: "",//键名
+                field: "status",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==1){
+                    if (row.status==1){
                         return '立即计算';
-                    }else if (row[2]==2){
+                    }else if (row.status==2){
                         return '预约计算';
-                    }else if (row[2]==3){
+                    }else if (row.status==3){
                         return '正在计算';
-                    }else if (row[2]==4){
-                        return '<a style="cursor: pointer;" onclick="_open(\''+row[0]+'\')>计算完成</a>';
+                    }else if (row.status==4){
+                        return '<a style="cursor: pointer;" onclick="_open(\''+row.name+'\')>计算完成</a>';
                     }
 
                 },
@@ -1375,7 +1429,7 @@ function task_list_2(data) {
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row[1]+'\')">立即更新</a>';
+                    return '<a style="cursor: pointer;" onclick="_rel_new(\''+row.time+'\')">立即更新</a>';
                 },
             },
 

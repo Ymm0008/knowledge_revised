@@ -103,7 +103,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-    margin: 45px 0 0 25px;
+    margin: 70px 0 0 25px;
 }
 #all_cards .cards_content #card_set .gov_card_details .details-2 .business {
     font-weight: 800;
@@ -150,7 +150,7 @@ body {
 }
 #all_cards .cards_content #card_set .per_card_details .details-1-bottom-left .attest {
     width: 110px;
-    margin:5px 0;
+    margin:8px 0;
     font-size:10px;
     white-space: nowrap;
     overflow: hidden;
@@ -240,6 +240,9 @@ body {
     /*font-size: 6px;*/
 /*}*/
 #all_cards .cards_content #card_set .event_card_details .details-right .details-right-2 .type_e .type {
+    display: inline-block;
+    position: relative;
+    top: 3px;
     width:42px;
     font-size: 6px;
     white-space: nowrap;

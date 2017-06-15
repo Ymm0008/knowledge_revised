@@ -72,7 +72,6 @@ $.ajax({
 var graph_force=[];
 var graph_picture;
 function result(data) {
-    console.log(data)
     if (simple_advanced=='s'){
         var data=eval(data);
         $('.related_network').hide();
@@ -362,8 +361,6 @@ function result(data) {
 //     }
 //
 // }
-
-
 
 
 //相关人物
@@ -701,7 +698,6 @@ function agencies(data) {
 //相关事件
 var events;
 function _events(e_data) {
-    console.log(11)
     var e_data = eval(e_data);
     events=e_data;
     $('.events_1').css({display:'none'});

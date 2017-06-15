@@ -72,13 +72,26 @@ function node(data) {
         alert('您搜索的节点不存在。');
     }else {
         var data = eval(data);
-        $('#node_list').bootstrapTable('load', data);
+        var node_modify=[];
+        $.each(data,function (index,item) {
+            node_modify.push({
+                'id':item[0],
+                'name':item[1],
+                'location':item[2],
+                'influe':item[3],
+                'active':item[4],
+                'sensitive':item[5],
+                'keywords':item[6],
+                'label':item[7]
+            })
+        });
+        $('#node_list').bootstrapTable('load', node_modify);
         $('#node_list').bootstrapTable({
-            data:data,
+            data:node_modify,
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40, 80],//分页步进值
+            pageList: [5, 15],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: false,//回车搜索
@@ -93,102 +106,102 @@ function node(data) {
             columns: [
                 {
                     title: "用户ID",//标题
-                    field: "",//键名
+                    field: "id",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
-                    formatter: function (value, row, index) {
-                        return row[0];
-                    }
+                    // formatter: function (value, row, index) {
+                    //     return row[0];
+                    // }
                 },
                 {
                     title: "昵称",//标题
-                    field: "",//键名
+                    field: "name",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[1]==''||row[1]=='NULL'||row[1]=='unknown'){
-                            return row[0];
+                        if (row.name==''||row.name=='NULL'||row.name=='unknown'){
+                            return row.id;
                         }else {
-                            return row[1];
+                            return row.name;
                         }
                     },
                 },
                 {
                     title: "注册地",//标题
-                    field: "",//键名
+                    field: "location",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'){
+                        if (row.location==''||row.location=='NULL'||row.location=='unknown'){
                             return '未知';
                         }else {
-                            return row[2];
+                            return row.location;
                         }
                     },
                 },
                 {
                     title: "影响力",//标题
-                    field: "",//键名
+                    field: "influe",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'){
+                        if (row.influe==''||row.influe=='NULL'||row.influe=='unknown'){
                             return 0;
                         }else {
-                            return row[3].toFixed(2);
+                            return row.influe.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "活跃度",//标题
-                    field: "",//键名
+                    field: "active",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[4]==''||row[4]=='NULL'||row[4]=='unknown'){
+                        if (row.active==''||row.active=='NULL'||row.active=='unknown'){
                             return 0;
                         }else {
-                            return row[4].toFixed(2);
+                            return row.active.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "敏感度",//标题
-                    field: "",//键名
+                    field: "sensitive",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'){
+                        if (row.sensitive==''||row.sensitive=='NULL'||row.sensitive=='unknown'){
                             return 0;
                         }else {
-                            return row[5].toFixed(2);
+                            return row.sensitive.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "自动标签",//标题
-                    field: "",//键名
+                    field: "keywords",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[6]==''||row[6]=='unknown'||row[6]=='NULL'){
+                        if (row.keywords==''||row.keywords=='unknown'||row.keywords=='NULL'){
                             return '暂无';
                         }else {
-                            var words=row[6].split('&');
+                            var words=row.keywords.split('&');
                             if (words.length<=5){
                                 return words.join(',');
                             }else {
@@ -201,16 +214,16 @@ function node(data) {
                 },
                 {
                     title: "业务标签",//标题
-                    field: "",//键名
+                    field: "label",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[7]==''||row[7]=='unknown'||row[7]=='NULL'){
+                        if (row.label==''||row.label=='unknown'||row.label=='NULL'){
                             return '暂无';
                         }else {
-                            var words=row[7].split('&');
+                            var words=row.label.split('&');
                             if (words.length<=5){
                                 return words.join(',');
                             }else {
@@ -229,9 +242,9 @@ function node(data) {
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        return '<a style="cursor: pointer;" onclick="rel_new(\''+row[0]+'\')">立即更新</a><br/>' +
-                            '<a style="cursor: pointer;" type="button" data-toggle="modal" data-target="#complie" onclick="go(\''+row[0]+'\')">编辑</a><br/>' +
-                            '<a style="cursor: pointer;" onclick="del(\''+row[0]+'\')">删除</a>';
+                        return '<a style="cursor: pointer;" onclick="rel_new(\''+row.id+'\')">立即更新</a><br/>' +
+                            '<a style="cursor: pointer;" type="button" data-toggle="modal" data-target="#complie" onclick="go(\''+row.id+'\')">编辑</a><br/>' +
+                            '<a style="cursor: pointer;" onclick="del(\''+row.id+'\')">删除</a>';
                     },
                 },
             ],
@@ -533,13 +546,28 @@ function event(data) {
         alert('您搜索的节点不存在。');
     }else {
         var data = eval(data);
+        var node_modify=[];
+        $.each(data,function (index,item) {
+            node_modify.push({
+                'id':item[0],
+                'event_name':item[1],
+                'event_type':item[2],
+                'event_time':item[3],
+                'location':item[4],
+                'people':item[5],
+                'weibo':item[6],
+                'keywords':item[7],
+                'label':item[8],
+                'status':item[9],
+            })
+        });
         $('#event_list').bootstrapTable('load', data);
         $('#event_list').bootstrapTable({
             data:data,
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40, 80],//分页步进值
+            pageList: [5, 15],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: false,//回车搜索
@@ -565,31 +593,31 @@ function event(data) {
                 // },
                 {
                     title: "事件名称",//标题
-                    field: "",//键名
+                    field: "event_name",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[1]==''||row[1]=='NULL'||row[1]=='unknown'){
-                            return row[0];
+                        if (row.event_name==''||row.event_name=='NULL'||row.event_name=='unknown'){
+                            return row.id;
                         }else {
-                            return row[1];
+                            return row.event_name;
                         }
                     }
                 },
                 {
                     title: "事件类型",//标题
-                    field: "",//键名
+                    field: "event_type",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'){
+                        if (row.event_type==''||row.event_type=='NULL'||row.event_type=='unknown'){
                             return '暂无';
                         }else {
-                            return _event[row[2]];
+                            return _event[row.event_type];
                         }
                     },
                 },
@@ -601,25 +629,25 @@ function event(data) {
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'){
+                        if (row.event_time==''||row.event_time=='NULL'||row.event_time=='unknown'){
                             return '暂无';
                         }else {
-                            return row[3];
+                            return row.event_time;
                         }
                     },
                 },
                 {
                     title: "发生地点",//标题
-                    field: "",//键名
+                    field: "location",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[4]==''||row[4]=='NULL'||row[4]=='unknown'){
+                        if (row.location==''||row.location=='NULL'||row.location=='unknown'){
                             return '暂无';
                         }else {
-                            return row[4];
+                            return row.location;
                         }
                     },
                 },
@@ -631,44 +659,44 @@ function event(data) {
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'){
-                            return '暂无';
+                        if (row.people==''||row.people=='NULL'||row.people=='unknown'){
+                            return 0;
                         }else {
-                            return row[5];
+                            return row.people;
                         }
                     },
                 },
                 {
                     title: "微博数量",//标题
-                    field: "",//键名
+                    field: "weibo",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[6]==''||row[6]=='NULL'||row[6]=='unknown'){
-                            return '暂无';
+                        if (row.weibo==''||row.weibo=='NULL'||row.weibo=='unknown'){
+                            return 0;
                         }else {
-                            return row[6];
+                            return row.weibo;
                         }
                     },
                 },
                 {
                     title: "自动标签",//标题
-                    field: "",//键名
+                    field: "keywords",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[7]==''||row[7]=='unknown'||row[7]=='NULL'){
+                        if (row.keywords==''||row.keywords=='unknown'||row.keywords=='NULL'){
                             return '暂无';
                         }else {
-                            if (row[7].length<=5){
-                                return row[7].join(',');
+                            if (row.keywords.length<=5){
+                                return row.keywords.join(',');
                             }else {
-                                var words=row[7].splice(0,5).join(',');
-                                var tit=row[7].splice(5).join(',');
+                                var words=row.keywords.splice(0,5).join(',');
+                                var tit=row.keywords.splice(5).join(',');
                                 return '<p title="'+tit+'">'+words+'</p> ';
                             }
                         }
@@ -676,20 +704,20 @@ function event(data) {
                 },
                 {
                     title: "业务标签",//标题
-                    field: "",//键名
+                    field: "label",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[8]==''||row[8]=='unknown'||row[8]=='NULL'){
+                        if (row.label==''||row.label=='unknown'||row.label=='NULL'){
                             return '暂无';
                         }else {
-                            if (row[8].length<=5){
-                                return row[8].join(',');
+                            if (row.label.length<=5){
+                                return row.label.join(',');
                             }else {
-                                var words=row[8].splice(0,5).join(',');
-                                var tit=row[8].splice(5).join(',');
+                                var words=row.label.splice(0,5).join(',');
+                                var tit=row.label.splice(5).join(',');
                                 return '<p title="'+tit+'">'+words+'</p> ';
                             }
 
@@ -698,17 +726,17 @@ function event(data) {
                 },
                 {
                     title: "计算状态",//标题
-                    field: "",//键名
+                    field: "status",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[9] < 0){
+                        if (row.status < 0){
                             return '正在计算';
-                        }else if (row[9]= 1){
+                        }else if (row.status= 1){
                             return '<a style="cursor: pointer;">计算完成</a>';
-                        }else if (row[9]= 0){
+                        }else if (row.status= 0){
                             return '尚未计算';
                         }
                     },
@@ -721,11 +749,11 @@ function event(data) {
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        return '<a style="cursor: pointer;" onclick="rel_new(\''+row[0]+'\')">立即更新</a><br/>' +
-                            '<a style="cursor: pointer;" onclick="run(\''+row[0]+'\')">编辑</a><br/>' +
+                        return '<a style="cursor: pointer;" onclick="rel_new(\''+row.id+'\')">立即更新</a><br/>' +
+                            '<a style="cursor: pointer;" onclick="run(\''+row.id+'\')">编辑</a><br/>' +
 
                             // '<a onclick="run(\''+row[0]+'\')">编辑</a><br/>' +
-                            '<a style="cursor: pointer;" onclick="del(\''+row[0]+'\')">删除</a>';
+                            '<a style="cursor: pointer;" onclick="del(\''+row.id+'\')">删除</a>';
                     },
                 },
             ],

@@ -205,13 +205,27 @@ $.ajax({
 });
 function things(data) {
     var data = eval(data);
-    $('#theme_list').bootstrapTable('load', data);
+    var group_peo=[];
+    $.each(data,function (index,item) {
+        group_peo.push({
+            'id':item[0],
+            'name':item[1],
+            'location':item[2],
+            'influence':item[3],
+            'active':item[4],
+            'sensitive':item[5],
+            'keywords':item[6],
+            'label':item[7],
+            'type':item[8],
+        })
+    });
+    $('#theme_list').bootstrapTable('load', group_peo);
     $('#theme_list').bootstrapTable({
-        data:data,
+        data:group_peo,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 20,],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -226,102 +240,102 @@ function things(data) {
         columns: [
             {
                 title: "人物ID",//标题
-                field: "",//键名
+                field: "id",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[0];
-                }
+                // formatter: function (value, row, index) {
+                //     return row.id;
+                // }
             },
             {
                 title: "昵称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[1]==''||row[1]=='NULL'){
-                        return row[0];
+                    if (row.name==''||row.name=='NULL'){
+                        return row.id;
                     }else{
-                        return row[1];
+                        return row.name;
                     }
                 }
             },
             {
                 title: "注册地",//标题
-                field: "",//键名
+                field: "location",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'){
+                    if (row.location==''||row.location=='NULL'||row.location=='unknown'){
                         return '未知';
                     }else{
-                        return row[2];
+                        return row.location;
                     }
                 },
             },
             {
                 title: "影响力",//标题
-                field: "",//键名
+                field: "influence",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'){
+                    if (row.influence==''||row.influence=='NULL'||row.influence=='unknown'){
                         return 0;
                     }else{
-                        return row[3].toFixed(2);
+                        return row.influence.toFixed(2);
                     }
                 },
             },
             {
                 title: "活跃度",//标题
-                field: "",//键名
+                field: "active",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4]==''||row[4]=='NULL'){
+                    if (row.active==''||row.active=='NULL'){
                         return 0;
                     }else{
-                        return row[4].toFixed(2);
+                        return row.active.toFixed(2);
                     }
                 },
             },
             {
                 title: "敏感度",//标题
-                field: "",//键名
+                field: "sensitive",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'){
+                    if (row.sensitive==''||row.sensitive=='NULL'||row.sensitive=='unknown'){
                         return 0;
                     }else{
-                        return row[5].toFixed(2);
+                        return row.sensitive.toFixed(2);
                     }
                 },
             },
             {
                 title: "自动标签",//标题
-                field: "",//键名
+                field: "keywords",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[6].length==0||row[6]==''||row[6]=='NULL'||row[6]=='null'){
+                    if (row.keywords.length==0||row.keywords==''||row.keywords=='NULL'||row.keywords=='null'){
                         return '暂无';
                     }else {
-                        var words=row[6].split('&');
+                        var words=row.keywords.split('&');
                         if (words.length<=5){
                             return words.join(',');
                         }else {
@@ -335,16 +349,16 @@ function things(data) {
             },
             {
                 title: "业务标签",//标题
-                field: "",//键名
+                field: "label",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[7].length==0||row[7]==''||row[7]=='NULL'){
+                    if (row.label.length==0||row.label==''||row.label=='NULL'){
                         return '暂无';
                     }else {
-                        var words=row[7].split('&');
+                        var words=row.label.split('&');
                         if (words.length<=5){
                             return words.join(',');
                         }else {
@@ -379,7 +393,7 @@ function things(data) {
         onClickCell: function (field, value, row, $element) {
             if ($element[0].innerText=='删除') {
                 $('#fail').modal('show');
-                event_id=row[0];
+                event_id=row.id;
             }
         }
     });
@@ -472,13 +486,27 @@ function event_list(data) {
         null;
     }else {
         var data = eval(data);
-        $('#event_list').bootstrapTable('load', data);
+        var add_peo=[];
+        $.each(data,function (index,item) {
+            add_peo.push({
+                'id':item[0],
+                'name':item[1],
+                'location':item[2],
+                'influence':item[3],
+                'active':item[4],
+                'sensitive':item[5],
+                'keywords':item[6],
+                'label':item[7],
+                'type':item[8],
+            })
+        });
+        $('#event_list').bootstrapTable('load', add_peo);
         $('#event_list').bootstrapTable({
-            data:data,
+            data:add_peo,
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 20, 40, 80],//分页步进值
+            pageList: [5, 20,],//分页步进值
             sidePagination: "client",//服务端分页
             searchAlign: "left",
             searchOnEnterKey: false,//回车搜索
@@ -493,102 +521,102 @@ function event_list(data) {
             columns: [
                 {
                     title: "人物ID",//标题
-                    field: "",//键名
+                    field: "id",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
-                    formatter: function (value, row, index) {
-                        return row[0];
-                    }
+                    // formatter: function (value, row, index) {
+                    //     return row[0];
+                    // }
                 },
                 {
                     title: "昵称",//标题
-                    field: "",//键名
+                    field: "name",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[1]==''||row[1]=='NULL'){
-                            return row[0];
+                        if (row.name==''||row.name=='NULL'){
+                            return row.id;
                         }else{
-                            return row[1];
+                            return row.name;
                         }
                     }
                 },
                 {
                     title: "注册地",//标题
-                    field: "",//键名
+                    field: "location",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[2]==''||row[2]=='NULL'||row[2]=='unknown'){
+                        if (row.location==''||row.location=='NULL'||row.location=='unknown'){
                             return '未知';
                         }else{
-                            return row[2];
+                            return row.location;
                         }
                     },
                 },
                 {
                     title: "影响力",//标题
-                    field: "",//键名
+                    field: "influence",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[3]==''||row[3]=='NULL'||row[3]=='unknown'){
+                        if (row.influence==''||row.influence=='NULL'||row.influence=='unknown'){
                             return 0;
                         }else{
-                            return row[3].toFixed(2);
+                            return row.influence.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "活跃度",//标题
-                    field: "",//键名
+                    field: "active",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[4]==''||row[4]=='NULL'){
+                        if (row.active==''||row.active=='NULL'){
                             return 0;
                         }else{
-                            return row[4].toFixed(2);
+                            return row.active.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "敏感度",//标题
-                    field: "",//键名
+                    field: "sensitive",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[5]==''||row[5]=='NULL'||row[5]=='unknown'){
+                        if (row.sensitive==''||row.sensitive=='NULL'||row.sensitive=='unknown'){
                             return 0;
                         }else{
-                            return row[5].toFixed(2);
+                            return row.sensitive.toFixed(2);
                         }
                     },
                 },
                 {
                     title: "自动标签",//标题
-                    field: "",//键名
+                    field: "keywords",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[6].length==0||row[6]==''||row[6]=='NULL'){
+                        if (row.keywords.length==0||row.keywords==''||row.keywords=='NULL'){
                             return '暂无';
                         }else {
-                            var words=row[6].split('&');
+                            var words=row.keywords.split('&');
                             if (words.length<=5){
                                 return words.join(',');
                             }else {
@@ -602,16 +630,16 @@ function event_list(data) {
                 },
                 {
                     title: "业务标签",//标题
-                    field: "",//键名
+                    field: "label",//键名
                     sortable: true,//是否可排序
                     order: "desc",//默认排序方式
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        if (row[7].length==0||row[7]==''||row[7]=='NULL'){
+                        if (row.label.length==0||row.label==''||row.label=='NULL'){
                             return '暂无';
                         }else {
-                            var words=row[7].split('&');
+                            var words=row.label.split('&');
                             if (words.length<=5){
                                 return words.join(',');
                             }else {
@@ -633,21 +661,20 @@ function event_list(data) {
 
             ],
             onCheck:function (row) {
-                thing_list.push(row[0]);
+                thing_list.push(row.id);
             },
             onUncheck:function (row) {
-                thing_list.removeByValue(row[0]);
+                thing_list.removeByValue(row.id);
             },
             onCheckAll:function (row) {
                 for(var index_i = 0;index_i<row.length; index_i++){
-                    thing_list.push(row[index_i][0]);
-
+                    thing_list.push(row[index_i].id);
                 }
             },
             onUncheckAll:function (row) {
                 for(var index_i = 0;index_i<row.length; index_i++){
                     // thing_list.push(row[index_i][0]);
-                thing_list.removeByValue(row[index_i][0]);
+                thing_list.removeByValue(row[index_i].id);
 
                 }
                 // thing_list.removeByValue(row[0]);
@@ -664,7 +691,6 @@ $('#add_theme').on('click',function () {
     }else {
         var new_thing_url='/group/create_relation/?node1_id='+node_ids+'&node2_id='+theme_name+
             '&submit_user='+submit_user;
-            console.log(new_thing_url)
         $.ajax({
             url:new_thing_url,
             type: 'GET',

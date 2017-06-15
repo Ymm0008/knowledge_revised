@@ -9,9 +9,19 @@ $.ajax({
 });
 function theme_overview(data) {
     var data = eval(data);
-    $('#theme_list').bootstrapTable('load', data);
+    var theme_all=[];
+    $.each(data,function (index,item) {
+        theme_all.push({
+            'name':item[1],
+            'include':item[2],
+            'time':item[5],
+            'keywords':item[3],
+            'label':item[4],
+        })
+    })
+    $('#theme_list').bootstrapTable('load', theme_all);
     $('#theme_list').bootstrapTable({
-        data:data,
+        data:theme_all,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
@@ -30,49 +40,49 @@ function theme_overview(data) {
         columns: [
             {
                 title: "专题名称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[1];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[1];
+                // }
             },
             {
                 title: "包含事件",//标题
-                field: "",//键名
+                field: "include",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[2];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[2];
+                // }
             },
             {
                 title: "创建时间",//标题
-                field: "",//键名
+                field: "time",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[5];
-                },
+                // formatter: function (value, row, index) {
+                //     return row[5];
+                // },
             },
             {
                 title: "自动标签",//标题
-                field: "",//键名
+                field: "keywords",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[3].length==0){
+                    if (row.keywords.length==0){
                         return '暂无';
                     }else {
-                        var words=row[3];
+                        var words=row.keywords;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -87,16 +97,16 @@ function theme_overview(data) {
             },
             {
                 title: "业务标签",//标题
-                field: "",//键名
+                field: "label",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4].length==0){
+                    if (row.label.length==0||(row.label.length==1&&row.label[0]=="")){
                         return '暂无';
                     }else {
-                        var words=row[4];
+                        var words=row.label;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -141,7 +151,7 @@ function theme_overview(data) {
 
         ],
         onCheck:function (row) {
-            theme_diff.push(row[1]);
+            theme_diff.push(row.name);
             if (theme_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -149,7 +159,7 @@ function theme_overview(data) {
             }
         },
         onUncheck:function (row) {
-            theme_diff.removeByValue(row[1]);
+            theme_diff.removeByValue(row.name);
             if (theme_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -157,7 +167,7 @@ function theme_overview(data) {
             }
         },
         onCheckAll:function (row) {
-            theme_diff.push(row[1]);
+            theme_diff.push(row.name);
             if (theme_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -165,7 +175,7 @@ function theme_overview(data) {
             }
         },
         onUncheckAll:function (row) {
-            theme_diff.removeByValue(row[1]);
+            theme_diff.removeByValue(row.name);
             if (theme_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -174,9 +184,9 @@ function theme_overview(data) {
         },
         onClickCell: function (field, value, row, $element) {
             if ($element[0].innerText=='查看专题') {
-                window.open('/theme/result/?theme_name='+row[1]);
+                window.open('/theme/result/?theme_name='+row.name);
             }else if ($element[0].innerText=='编辑专题') {
-                window.open('/theme/modify/?theme_name='+row[1]);
+                window.open('/theme/modify/?theme_name='+row.name);
             }
         }
     });

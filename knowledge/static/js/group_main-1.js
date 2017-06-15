@@ -9,13 +9,24 @@ $.ajax({
 });
 function group_overview(data) {
     var data = eval(data);
-    $('#group_list').bootstrapTable('load', data);
+    var groups=[];
+    $.each(data,function (index,item) {
+        groups.push({
+            'name':item[1],
+            'people':item[2],
+            'date':item[5],
+            'keywords':item[3],
+            'label':item[4],
+        })
+    })
+
+    $('#group_list').bootstrapTable('load', groups);
     $('#group_list').bootstrapTable({
-        data:data,
+        data:groups,
         search: true,//是否搜索
         pagination: true,//是否分页
         pageSize: 5,//单页记录数
-        pageList: [5, 20, 40, 80],//分页步进值
+        pageList: [5, 20],//分页步进值
         sidePagination: "client",//服务端分页
         searchAlign: "left",
         searchOnEnterKey: false,//回车搜索
@@ -30,49 +41,49 @@ function group_overview(data) {
         columns: [
             {
                 title: "群体名称",//标题
-                field: "",//键名
+                field: "name",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[1];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[1];
+                // }
             },
             {
                 title: "包含人数",//标题
-                field: "",//键名
+                field: "people",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[2];
-                }
+                // formatter: function (value, row, index) {
+                //     return row[2];
+                // }
             },
             {
                 title: "创建时间",//标题
-                field: "",//键名
+                field: "date",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
-                formatter: function (value, row, index) {
-                    return row[5];
-                },
+                // formatter: function (value, row, index) {
+                //     return row[5];
+                // },
             },
             {
                 title: "自动标签",//标题
-                field: "",//键名
+                field: "keywords",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[3].length==0){
+                    if (row.keywords.length==0){
                         return '暂无';
                     }else {
-                        var words=row[3];
+                        var words=row.keywords;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -87,16 +98,16 @@ function group_overview(data) {
             },
             {
                 title: "业务标签",//标题
-                field: "",//键名
+                field: "label",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
                 valign: "middle",//垂直
                 formatter: function (value, row, index) {
-                    if (row[4].length==0){
+                    if (row.label.length==0){
                         return '暂无';
                     }else {
-                        var words=row[4];
+                        var words=row.label;
                         words.removeByValue('');
                         if (words.length<=5){
                             return words.join(',');
@@ -110,7 +121,7 @@ function group_overview(data) {
             },
             {
                 title: "群体查看",//标题
-                field: "",//键名
+                field: "look",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
@@ -121,7 +132,7 @@ function group_overview(data) {
             },
             {
                 title: '群体编辑',//标题
-                field: "",//键名
+                field: "conplie",//键名
                 sortable: true,//是否可排序
                 order: "desc",//默认排序方式
                 align: "center",//水平
@@ -141,7 +152,7 @@ function group_overview(data) {
 
         ],
         onCheck:function (row) {
-            group_diff.push(row[1]);
+            group_diff.push(row.name);
             if (group_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -149,7 +160,7 @@ function group_overview(data) {
             }
         },
         onUncheck:function (row) {
-            group_diff.removeByValue(row[1]);
+            group_diff.removeByValue(row.name);
             if (group_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }else {
@@ -157,27 +168,26 @@ function group_overview(data) {
             }
         },
         onCheckAll:function (row) {
-            group_diff.push(row[1]);
+            group_diff.push(row.name);
             if (group_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }
         },
         onUncheckAll:function (row) {
-            group_diff.removeByValue(row[1]);
+            group_diff.removeByValue(row.name);
             if (group_diff.length>1){
                 $('#container .group_operating .compared').css({color:'#337ab7'});
             }
         },
         onClickCell: function (field, value, row, $element) {
             if ($element[0].innerText=='群体查看') {
-                window.open('/group/result/?group_name='+row[1]);
+                window.open('/group/result/?group_name='+row.name);
             }else if ($element[0].innerText=='群体编辑') {
-                window.open('/group/modify/?group_name='+row[1]);
+                window.open('/group/modify/?group_name='+row.name);
             }
         }
     });
 };
-
 var group_diff=[];
 
 $('#container .group_operating .operating .compared').on('click',function () {
@@ -200,4 +210,4 @@ Array.prototype.removeByValue = function(val) {
         }
     }
 };
-
+//-----
